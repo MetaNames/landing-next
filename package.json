@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@metanames/sdk": "^5.9.8",
-    "@peculiar/webcrypto": "^1.4.5",
     "@radix-ui/react-slot": "^1.0.2",
     "@sentry/nextjs": "^7.107.0",
     "@tanstack/react-query": "^5.28.4",
@@ -23,7 +22,6 @@
     "react-countup": "^6.5.1",
     "react-dom": "^18",
     "react-icons": "^5.0.1",
-    "stream-browserify": "^3.0.0",
     "tailwind-merge": "^2.2.2",
     "tailwindcss-animate": "^1.0.7"
   },
