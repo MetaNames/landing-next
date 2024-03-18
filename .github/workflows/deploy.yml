@@ -20,3 +20,4 @@ jobs:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
           GITHUB_DEPLOYMENT_ENV: ${{ github.ref == 'refs/heads/main' && 'production' || 'preview' }}
+          ALIAS_DOMAIN: ${{ github.ref == 'refs/heads/staging' && 'test.next.metanames.app' || '' }}
