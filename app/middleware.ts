@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 
+// Vercel Edge Runtime
+export const runtime = 'edge'
 export function middleware(request: NextRequest) {
   const nonce = Buffer.from(crypto.randomUUID()).toString('base64')
   const cspHeader = `
