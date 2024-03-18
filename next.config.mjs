@@ -2,6 +2,13 @@ import {withSentryConfig} from '@sentry/nextjs';
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   productionBrowserSourceMaps: false,
+  webpack: {
+    resolve: {
+      alias: {
+        "crypto": "@peculiar/webcrypto"
+      }
+    }
+  }
 };
 
 export default withSentryConfig(nextConfig, {
