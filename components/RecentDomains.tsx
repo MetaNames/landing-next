@@ -16,7 +16,7 @@ const RecentDomains = () => {
   const { stats } = useStats();
 
   return (
-    <div className="relative flex w-screen items-center overflow-hidden">
+    <div className="relative flex items-center overflow-hidden">
       <div className="relative flex w-full py-5">
         <div className="flex w-max animate-marquee [--duration:25s] hover:[animation-play-state:paused]">
           {stats?.recentDomains.map((item, index) => (
