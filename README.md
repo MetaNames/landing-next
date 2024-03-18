@@ -2,7 +2,7 @@
 
 This is the landing page of [metanames.app](https://metanames.app/), a cutting-edge web3 domain name system for the Partisia Blockchain. Register your domain and subdomains effortlessly with Meta Names!
 
-Build using [Next.js](https://nextjs.org/) and bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Built using [Next.js](https://nextjs.org/) and bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started 📚
 
@@ -17,6 +17,15 @@ Then, install the dependencies and copy the `.env.example` file into a `.env` fi
 
 ```bash
 npm install
+# or
+yarn install
+# or
+pnpm install
+# or
+bun install
+```
+
+```bash
 cp .env.example .env
 ```
 
