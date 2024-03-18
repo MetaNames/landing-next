@@ -113,7 +113,7 @@ export default function Home() {
         <Button
           icon={<MdOpenInNew />}
           variant="secondary"
-          href={"https://github.com/MetaNames/sdk/wiki"}
+          href={"https://docs.metanames.app"}
         >
           Learn More
         </Button>
