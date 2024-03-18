@@ -2,10 +2,11 @@ import {withSentryConfig} from '@sentry/nextjs';
 import NodePolyfillPlugin from "node-polyfill-webpack-plugin";
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  productionBrowserSourceMaps: false,
   webpack: {
     plugins: [
-      new NodePolyfillPlugin()
+      new NodePolyfillPlugin({
+        includeAliases: ['crypto', 'stream']
+      })
     ]
   }
 };
