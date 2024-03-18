@@ -40,10 +40,10 @@ export default function Home() {
             href="https://partisiablockchain.com/"
             target="_blank"
             rel="noopener noreferrer"
+            className="underline font-medium px-2"
           >
-            Partisia Blockchain
+            Partisia Blockchain.
           </Link>
-          .
         </p>
         <p>
           Create your unique Meta Names profile using your personal domain,
@@ -66,6 +66,7 @@ export default function Home() {
             href="https://t.me/mpc_metanames"
             target="_blank"
             rel="noopener noreferrer"
+            className="underline font-medium px-2"
           >
             community channel
           </Link>
@@ -97,6 +98,7 @@ export default function Home() {
             href="https://t.me/mpc_metanames"
             target="_blank"
             rel="noopener noreferrrer"
+            className="underline font-medium px-2"
           >
             Join our supportive community
           </Link>
