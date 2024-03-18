@@ -57,7 +57,7 @@ export default function Home() {
         </p>
       </Section>
 
-      <Section variant="primary" contentClassName="px-0">
+      <Section variant="primary" contentClassName="px-0 md:px-0 max-w-full">
         <h2 className="text-5xl">Recently registered domains</h2>
         <p>Check out the freshest domains just claimed on Meta Names!</p>
         <p>
