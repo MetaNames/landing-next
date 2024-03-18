@@ -1,5 +1,7 @@
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
+// Vercel Edge Runtime
+export const runtime = 'edge'
 export const useStats = () => {
   const { data: stats, ...rest } = useQuery<{
     domainCount: number;
