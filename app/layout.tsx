@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Roboto } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 
 import { cn } from "@/lib/utils";
@@ -8,10 +8,9 @@ import { Header } from "@/components/Header";
 
 import Providers from "./providers";
 
-const font = Roboto({
+const font = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
-  weight: ["100", "300", "500"],
 });
 
 export const metadata: Metadata = {
