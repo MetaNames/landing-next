@@ -1,13 +1,13 @@
 import {withSentryConfig} from '@sentry/nextjs';
-import NodePolyfillPlugin from "node-polyfill-webpack-plugin";
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   webpack: {
-    plugins: [
-      new NodePolyfillPlugin({
-        includeAliases: ['crypto', 'stream']
-      })
-    ]
+    loaders: {
+      fallback: {
+        crypto: require.resolve('@peculiar/webcrypto'),
+        stream: require.resolve('stream-browserify'),
+      }
+    }
   }
 };
 
