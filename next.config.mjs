@@ -4,8 +4,11 @@ const nextConfig = {
   productionBrowserSourceMaps: false,
   webpack: {
     resolve: {
-      alias: {
-        "crypto": "@peculiar/webcrypto"
+      resolve: {
+        fallback: {
+          "stream": false,
+          "crypto": false,
+        }
       }
     }
   }
