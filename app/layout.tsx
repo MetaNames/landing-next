@@ -25,8 +25,6 @@ export const viewport: Viewport = {
   themeColor: "#6849fe",
 };
 
-// Vercel Edge Runtime
-export const runtime = 'edge'
 export default function RootLayout({
   children,
 }: Readonly<{
