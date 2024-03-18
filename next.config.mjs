@@ -1,11 +1,13 @@
 import {withSentryConfig} from '@sentry/nextjs';
+import { Crypto } from '@peculiar/webcrypto';
+import stream from 'stream-browserify';
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   webpack: {
     loaders: {
       fallback: {
-        crypto: require.resolve('@peculiar/webcrypto'),
-        stream: require.resolve('stream-browserify'),
+        crypto: Crypto,
+        stream,
       }
     }
   }
