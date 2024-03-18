@@ -29,24 +29,26 @@ const links = [
 
 const Footer = (props: FooterProps) => {
   return (
-    <footer className="bg-secondary flex justify-between py-6 px-4 flex-col md:flex-row sm:items-left items-center gap-5">
-      <a href="/" className="flex items-center">
-        <Logo />
-        <span className="text-white self-center text-xs font-medium whitespace-nowrap dark:text-white">
-          Meta Names
-        </span>
-      </a>
-      <div className="flex flex-row items-center justify-evenly gap-5">
-        {links.map((link) => (
-          <Link
-            key={link.url}
-            target="_blank"
-            href={link.url}
-            className="text-xs text-white"
-          >
-            {link.title}
-          </Link>
-        ))}
+    <footer className="bg-secondary  py-6 px-4">
+      <div className="flex-col flex justify-between md:flex-row sm:items-left items-center gap-5 w-full max-w-screen-xl mx-auto">
+        <a href="/" className="flex items-center">
+          <Logo />
+          <span className="text-white self-center text-xs font-medium whitespace-nowrap dark:text-white">
+            Meta Names
+          </span>
+        </a>
+        <div className="flex flex-row items-center justify-evenly gap-5">
+          {links.map((link) => (
+            <Link
+              key={link.url}
+              target="_blank"
+              href={link.url}
+              className="text-xs text-white"
+            >
+              {link.title}
+            </Link>
+          ))}
+        </div>
       </div>
     </footer>
   );
