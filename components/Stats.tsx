@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import CountUp from "react-countup";
 
+import partisiaImage from "@/public/assets/images/partisia-logo.png";
 import { useStats } from "@/hooks/useStats";
 
 const partisiaBlock = {
@@ -17,10 +18,9 @@ const partisiaBlock = {
         rel="noopener noreferrer"
       >
         <Image
-          src={"/assets/images/partisia-logo.png"}
+          src={partisiaImage}
           alt="Partisia Blockchain"
-          height={15}
-          width={200}
+          className="w-full h-full max-w-[200px]"
         />
       </Link>
     </div>
@@ -60,11 +60,11 @@ const Stats = () => {
   ];
 
   return (
-    <div className="flex justify-between gap-4 md:flex-row flex-col  mx-auto">
+    <div className="flex justify-between gap-4 md:flex-row flex-col mx-auto">
       {infos.map(({ name, children }) => (
         <div
           key={name}
-          className="flex bg-primary p-4 rounded-lg justify-center min-w-max md:min-w-[30%]"
+          className="flex bg-primary p-4 rounded-lg justify-center min-w-full md:min-w-[30%]"
         >
           {children}
         </div>
