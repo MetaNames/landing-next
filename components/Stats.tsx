@@ -20,7 +20,7 @@ const partisiaBlock = {
         <Image
           src={partisiaImage}
           alt="Partisia Blockchain"
-          className="w-full h-full max-w-[200px]"
+          className="w-full h-full max-w-40"
         />
       </Link>
     </div>
