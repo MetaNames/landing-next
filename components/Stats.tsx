@@ -11,7 +11,7 @@ const partisiaBlock = {
   name: "partisia",
   children: (
     <div className="flex gap-6 justify-around items-center">
-      <span className="text-xs">Supported by</span>
+      <span className="text-sm">Supported by</span>
       <Link
         href="https://partisiablockchain.com/"
         target="_blank"
@@ -40,7 +40,7 @@ const Stats = () => {
               <CountUp end={stats?.domainCount} duration={5} />
             )}
           </span>
-          <div className="text-xs">Meta Names Registered</div>
+          <div className="text-sm">Meta Names Registered</div>
         </div>
       ),
     },
@@ -53,7 +53,7 @@ const Stats = () => {
               <CountUp end={stats?.ownerCount} duration={5} />
             )}
           </span>
-          <div className="text-xs">Unique Wallets</div>
+          <div className="text-sm">Unique Wallets</div>
         </div>
       ),
     },

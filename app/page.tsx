@@ -9,6 +9,9 @@ import { Section } from "@/components/Section";
 import { Stats } from "@/components/Stats";
 
 export default function Home() {
+  const Subtitle = ({ title }: { title: string }) => (
+    <h2 className="text-5xl font-medium">{title}</h2>
+  )
   return (
     <main className="min-h-screen">
       <Section variant="primary" className="min-h-[450px] space-y-8">
@@ -32,7 +35,7 @@ export default function Home() {
 
       <Section variant={"secondary"}>
         <Stats />
-        <h2 className="text-5xl">The only name you need</h2>
+        <Subtitle title="The only name you need" />
         <p>
           Register your domain and subdomains effortlessly with{" "}
           <b>Meta Names</b>, the cutting-edge web3 domain name system for
@@ -58,7 +61,7 @@ export default function Home() {
       </Section>
 
       <Section variant="primary" contentClassName="px-0 md:px-0 max-w-full">
-        <h2 className="text-5xl">Recently registered domains</h2>
+        <Subtitle title="Recently registered domains" />
         <p>Check out the freshest domains just claimed on Meta Names!</p>
         <p>
           Did you just register a domain? Brag your new Meta Name in our{" "}
@@ -75,7 +78,7 @@ export default function Home() {
       </Section>
 
       <Section variant={"secondary"}>
-        <h2 className="text-5xl">Generate your Meta Name</h2>
+        <Subtitle title="Generate your Meta Name" />
         <p>
           {"Running low on ideas? No worries, we've got your back!"}
           <br />
@@ -86,7 +89,7 @@ export default function Home() {
       </Section>
 
       <Section variant="primary">
-        <h2 className="text-5xl">Integrate with Meta Names SDK</h2>
+        <Subtitle title="Integrate with Meta Names SDK" />
         <p>
           Discover the ease of web3 domain management with <b>Meta Names SDK</b>{" "}
           for Partisia Blockchain.
