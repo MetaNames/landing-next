@@ -26,7 +26,7 @@ const RecentDomains = () => {
               onClick={() => router.push(`${routes.domains.path}/${item.name}`)}
             >
               <div className="relative h-full w-[28rem] rounded-2xl border border-white/5 bg-white/5 hover:bg-white/10 px-8 py-6">
-                <div className="pb-4 font-light text-white">{item.name}</div>
+                <div className="pb-4 font-normal text-white">{item.name}</div>
 
                 <div className="font-light text-white/75 text-sm">
                   {formatCreatedAt(item.createdAt)}
