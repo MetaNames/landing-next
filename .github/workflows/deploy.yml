@@ -19,5 +19,6 @@ jobs:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+          VERCEL_SCOPE: ${{ secrets.VERCEL_SCOPE }}
           PRODUCTION: ${{ github.ref == 'refs/heads/main' && 'true' || 'false' }}
           ALIAS_DOMAINS: ${{ github.ref == 'refs/heads/staging' && 'test.next.metanames.app' || '' }}
