@@ -9,7 +9,7 @@ export const useStats = () => {
     recentDomains: { name: string; createdAt: string }[];
   }>({
     queryKey: ["stats"],
-    queryFn: () => fetch("/api/stats").then((res) => res.json()),
+    queryFn: () => fetch("/api/domains/stats").then((res) => res.json()),
     placeholderData: keepPreviousData,
     refetchInterval: 10000, // Refresh every 10 seconds
   });
