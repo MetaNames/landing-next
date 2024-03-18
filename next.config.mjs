@@ -1,16 +1,12 @@
 import {withSentryConfig} from '@sentry/nextjs';
+import NodePolyfillPlugin from "node-polyfill-webpack-plugin";
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   productionBrowserSourceMaps: false,
   webpack: {
-    resolve: {
-      resolve: {
-        fallback: {
-          "stream": false,
-          "crypto": false,
-        }
-      }
-    }
+    plugins: [
+      new NodePolyfillPlugin()
+    ]
   }
 };
 
