@@ -22,7 +22,7 @@ export const MetaNamesConfig = new ConfigProvider(sdkEnvironment).resolve();
 export const metaNamesSdk = new MetaNamesSdk(sdkEnvironment);
 
 export const getMetaNamesStats = async () => {
-  return fetch(`${routes.app.path}/api/domains/stats`).then((res) =>
+  return fetch(`${routes.app.path}/api/domains/stats`, { next: { revalidate: 60 } }).then((res) =>
     res.json()
   ) as Promise<DomainStats>;
 };
