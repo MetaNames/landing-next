@@ -11,10 +11,7 @@ export const useStats = () => {
     queryKey: ["stats"],
     queryFn: () => fetch("/api/stats").then((res) => res.json()),
     placeholderData: keepPreviousData,
-    refetchInterval: (query) => {
-      query.invalidate()
-      return 60_000 // Refresh every 60 seconds
-    },
+    refetchInterval: 60_000, // Refresh every 60 seconds
   });
 
   return { stats, ...rest };
