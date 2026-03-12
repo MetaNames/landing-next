@@ -1,6 +1,7 @@
 import {withSentryConfig} from '@sentry/nextjs';
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  packageManager: 'npm@latest',
   webpack: (config, props) => {
     config.resolve.fallback = config.resolve.fallback || {}
     config.resolve.fallback['crypto'] = false
