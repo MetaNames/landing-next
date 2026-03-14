@@ -1,4 +1,4 @@
-# MetaNames Landing (landing-next) — STATUS.md
+# MetaNames Landing (metanames-landing-next) — STATUS.md
 
 > Single source of truth for project state, open items, and decisions.
 
@@ -38,13 +38,25 @@
 ### Session Log
 | # | Date | Time (UTC) | Work Done | Blockers |
 |---|------|------------|-----------|----------|
-| 1 | 2026-03-14 | | | |
+| 1 | 2026-03-14 | 00:19 UTC | Added sitemap.ts, robots.ts, enhanced metadata (OG, Twitter Cards, keywords) | None |
 
 ---
 
 ## Current Task (Edit this each session)
 
-**Task:** [Describe current work]
+**Task:** Modernize landing page - layout, animations, accessibility
+
+**Goal:**
+1. Install framer-motion (if not present)
+2. Update globals.css: add animation utilities + accessibility (skip link, focus states, reduced motion)
+3. Update components:
+   - Header.tsx: Mobile responsive with animated hamburger menu
+   - Section.tsx: Scroll-triggered fade-in animations with framer-motion
+   - Footer.tsx: Accessibility improvements (aria-labels, roles)
+   - page.tsx: Hero section with gradient background + floating shapes, add section IDs for anchor links
+4. Build: `npm run build`
+5. Test: Verify mobile responsive + animations work
+6. Push: Commit to new branch `modernize-landing-v2`
 
 **Last session notes:** 
 
