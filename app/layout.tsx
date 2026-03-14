@@ -15,9 +15,61 @@ const font = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Meta Names",
+  title: {
+    default: "MetaNames | DNS for Partisia Blockchain",
+    template: "%s | MetaNames",
+  },
   description:
-    "Meta Names offers a cutting-edge DNS solution on the Partisia blockchain, specifically designed for the Web3 environment. It simplifies the process of blockchain integration for developers through a user-friendly SDK, enabling easy access and management of decentralized domain names. This service streamlines the development of Web3 applications by providing seamless domain management and enhanced user experience, making blockchain technology more accessible and efficient for developers.",
+    "Meta Names offers a cutting-edge DNS solution on the Partisia blockchain. Simplify blockchain integration for Web3 developers with our user-friendly SDK. Manage decentralized domain names seamlessly.",
+  keywords: [
+    "DNS",
+    "Partisia Blockchain",
+    "Web3",
+    "Blockchain域名",
+    "Decentralized DNS",
+    "Web3 domains",
+    "Crypto domain",
+    ".meta",
+  ],
+  authors: [{ name: "MetaNames Team" }],
+  creator: "MetaNames",
+  metadataBase: new URL("https://metanames.app"),
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://metanames.app",
+    siteName: "MetaNames",
+    title: "MetaNames | DNS for Partisia Blockchain",
+    description:
+      "Cutting-edge DNS solution on Partisia Blockchain. Simplify Web3 domain management with our developer-friendly SDK.",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "MetaNames - DNS for Partisia Blockchain",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "MetaNames | DNS for Partisia Blockchain",
+    description:
+      "Cutting-edge DNS solution on Partisia Blockchain. Simplify Web3 domain management.",
+    images: ["/og-image.png"],
+    creator: "@metanames",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
 };
 
 export const viewport: Viewport = {
