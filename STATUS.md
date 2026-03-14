@@ -39,6 +39,8 @@
 | # | Date | Time (UTC) | Work Done | Blockers |
 |---|------|------------|-----------|----------|
 | 1 | 2026-03-14 | 00:19 UTC | Added sitemap.ts, robots.ts, enhanced metadata (OG, Twitter Cards, keywords) | None |
+| 2 | 2026-03-14 | 10:22 UTC | Modernize landing page: Fixed build errors, pushed to `modernize-landing-v2` branch (animations, accessibility, mobile responsive) | None |
+| 3 | 2026-03-14 | 12:04 UTC | Verified build passes, PR #2 open and mergeable — awaiting review | None |
 
 ---
 
@@ -58,9 +60,9 @@
 5. Test: Verify mobile responsive + animations work
 6. Push: Commit to new branch `modernize-landing-v2`
 
-**Last session notes:** 
+**Last session notes:** Completed: Fixed build errors, animations working, accessibility features added (skip link, focus states, reduced motion), mobile responsive header. Pushed to `modernize-landing-v2` branch. Build passes.
 
-**Next session:**
+**Next session:** Open PR and merge to main (after Marco review)
 
 - Side project with Bruce (MetaNames)
 - Deployed on Vercel, auto-deploys from main
