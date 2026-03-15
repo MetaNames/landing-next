@@ -244,17 +244,6 @@ export default function Home() {
           <AnimatedText className="mb-8" delay={0.1}>
             See what's trending. Names are going fast.
           </AnimatedText>
-          <AnimatedText className="mb-8" delay={0.2}>
-            Got one? Drop it in our{" "}
-            <Link
-              href="https://t.me/mpc_metanames"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline font-medium px-1 hover:text-primary-foreground transition-colors"
-            >
-              Telegram
-            </Link> — let's see it.
-          </AnimatedText>
           <RecentDomains />
         </Section>
 
