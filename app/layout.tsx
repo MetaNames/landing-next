@@ -1,6 +1,6 @@
 import { Analytics } from "@vercel/analytics/react";
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 
 import { Footer } from "@/components/Footer";
@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 
 import Providers from "./providers";
 
-const font = Inter({
+const font = Plus_Jakarta_Sans({
   subsets: ["latin"],
   variable: "--font-sans",
 });
