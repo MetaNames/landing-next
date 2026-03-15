@@ -9,8 +9,6 @@ import { MetaNamesConfig } from "@/lib/metanames";
 
 type Category = "all" | "adjectives" | "names" | "starwars" | "colors";
 
-const allDictionaries = names.concat(adjectives, colors, starWars);
-
 const getDictionary = (category: Category) => {
   switch (category) {
     case "adjectives":
@@ -23,36 +21,25 @@ const getDictionary = (category: Category) => {
       return colors;
     case "all":
     default:
-      return allDictionaries;
+      return names.concat(adjectives, colors, starWars);
   }
 };
-
-function shuffleArray<T>(arr: T[]): T[] {
-  const shuffled = [...arr];
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-  }
-  return shuffled;
-}
 
 const generateRandomName = (category: Category = "all", wordCount: number = 2) => {
   const dict = getDictionary(category);
   
-  // Ensure word count doesn't exceed dictionary length
-  const safeWordCount = Math.min(wordCount, dict.length);
+  // unique-names-generator needs each word to come from a separate dictionary
+  // So we duplicate the dictionary array to create enough "dictionary slots"
+  const dictionaries = Array(wordCount).fill(dict);
   
   const customConfig = {
-    dictionaries: [shuffled(dict)],
+    dictionaries,
     separator: "-",
-    length: safeWordCount,
+    length: wordCount,
   };
   
   return uniqueNamesGenerator(customConfig).toLocaleLowerCase();
 };
-
-// Pre-shuffle dictionaries at startup
-const shuffled = <T>(arr: T[]): T[] => shuffleArray(arr);
 
 export const generateMetaName = (category: Category = "all", wordCount: number = 2) => {
   const generatedName = generateRandomName(category, wordCount);
