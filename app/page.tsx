@@ -210,8 +210,8 @@ export default function Home() {
 
         {/* Stats Section */}
         <Section variant="secondary" id="features" delay={0.1}>
-          <AnimatedHeading className="text-4xl md:text-5xl font-medium mb-8" delay={0}>
-            The only name you need
+          <AnimatedHeading className="text-4xl md:text-5xl font-medium mb-8 tracking-wide uppercase" delay={0}>
+            One name. All you need.
           </AnimatedHeading>
           
           <AnimatedText className="max-w-3xl mx-auto" delay={0.1}>
@@ -251,8 +251,8 @@ export default function Home() {
           contentClassName="px-0 md:px-0 max-w-full"
           delay={0.2}
         >
-          <AnimatedHeading className="text-4xl md:text-5xl font-medium mb-4" delay={0}>
-            Recently registered domains
+          <AnimatedHeading className="text-4xl md:text-5xl font-medium mb-4 tracking-wide uppercase" delay={0}>
+            Fresh domains
           </AnimatedHeading>
           <AnimatedText className="mb-8" delay={0.1}>
             Check out the freshest domains just claimed on Meta Names!
@@ -273,8 +273,8 @@ export default function Home() {
 
         {/* Name Generator Section */}
         <Section variant="secondary" id="generator" delay={0.3}>
-          <AnimatedHeading className="text-4xl md:text-5xl font-medium mb-4" delay={0}>
-            Generate your Meta Name
+          <AnimatedHeading className="text-4xl md:text-5xl font-medium mb-4 tracking-wide uppercase" delay={0}>
+            Find yours
           </AnimatedHeading>
           <AnimatedText className="mb-4" delay={0.1}>
             {"Running low on ideas? No worries, we've got your back!"}
@@ -286,8 +286,8 @@ export default function Home() {
 
         {/* SDK Section */}
         <Section variant="primary" id="sdk" delay={0.4}>
-          <AnimatedHeading className="text-4xl md:text-5xl font-medium mb-8" delay={0}>
-            Integrate with Meta Names SDK
+          <AnimatedHeading className="text-4xl md:text-5xl font-medium mb-8 tracking-wide uppercase" delay={0}>
+            Build with us
           </AnimatedHeading>
           
           <AnimatedText className="max-w-3xl mx-auto" delay={0.1}>
