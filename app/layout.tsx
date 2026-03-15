@@ -29,11 +29,17 @@ export const metadata: Metadata = {
     "Decentralized DNS",
     "Web3 domains",
     "Crypto domain",
-    ".meta",
+    ".mpc",
+    "Partisia",
   ],
   authors: [{ name: "MetaNames Team" }],
   creator: "MetaNames",
   metadataBase: new URL("https://metanames.app"),
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "MetaNames",
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -84,7 +90,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head />
+      <head>
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <link rel="manifest" href="/manifest.json" />
+      </head>
       <body
         className={cn(
           "min-h-screen bg-background font-sans antialiased",

@@ -1,11 +1,9 @@
-"use client";
-
 import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { MdOpenInNew, MdRefresh, MdCheck } from "react-icons/md";
 
-import { generateMetaName, Category } from "@/lib/generator";
+import { generateMetaName, Category, WordCount, CATEGORY_LABELS, WORD_COUNTS } from "@/lib/generator";
 import { Button } from "@/components/Button";
 import routes from "@/constants/routes";
 
@@ -14,21 +12,16 @@ interface CategoryOption {
   label: string;
 }
 
-const categories: CategoryOption[] = [
-  { id: "all", label: "Mixed" },
-  { id: "adjectives", label: "Adjectives" },
-  { id: "names", label: "Names" },
-  { id: "starwars", label: "Star Wars" },
-  { id: "colors", label: "Colors" },
-];
-
-const wordCounts = [1, 2, 3];
+const categories: CategoryOption[] = Object.entries(CATEGORY_LABELS).map(([id, label]) => ({
+  id: id as Category,
+  label,
+}));
 
 const NamesGenerator = () => {
   const router = useRouter();
   const [generatedName, setGeneratedName] = useState<string | null>();
   const [selectedCategory, setSelectedCategory] = useState<Category>("all");
-  const [wordCount, setWordCount] = useState<number>(2);
+  const [wordCount, setWordCount] = useState<WordCount>(2);
   const [isGenerating, setIsGenerating] = useState(false);
 
   const generateName = useCallback(() => {
@@ -47,7 +40,7 @@ const NamesGenerator = () => {
     setSelectedCategory(category);
   };
 
-  const handleWordCountChange = (count: number) => {
+  const handleWordCountChange = (count: WordCount) => {
     setWordCount(count);
   };
 
@@ -82,7 +75,7 @@ const NamesGenerator = () => {
           Number of Words
         </label>
         <div className="flex gap-3">
-          {wordCounts.map ((count) => (
+          {WORD_COUNTS.map((count) => (
             <button
               key={count}
               onClick={() => handleWordCountChange(count)}
@@ -127,7 +120,7 @@ const NamesGenerator = () => {
           size="lg"
           onClick={() => {
             if (generatedName) {
-              router.push(`${routes.register.path}/${generatedName.replace('.meta', '')}`);
+              router.push(`${routes.register.path}/${generatedName.replace('.mpc', '')}`);
             }
           }}
         >

@@ -1,26 +1,33 @@
 "use client";
-import { useEffect, useState } from "react";
 
-const recordClasses = [
+import { useEffect, useState, useMemo } from "react";
+import { ANIMATION } from "@/lib/constants";
+
+const RECORD_TYPES = [
   "wallet address",
   "social handles",
   "website URL",
   "bio",
   "avatar",
-];
+] as const;
+
+type RecordType = (typeof RECORD_TYPES)[number];
 
 const RecordClasses = () => {
   const [index, setIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
 
+  const currentRecord = useMemo(() => RECORD_TYPES[index], [index]);
+
   useEffect(() => {
     const interval = setInterval(() => {
       setIsVisible(false);
+      
       setTimeout(() => {
-        setIndex((prev) => (prev + 1) % recordClasses.length);
+        setIndex((prev) => (prev + 1) % RECORD_TYPES.length);
         setIsVisible(true);
-      }, 300);
-    }, 3000);
+      }, ANIMATION.RECORD_FADE_DURATION);
+    }, ANIMATION.RECORD_CHANGE_INTERVAL);
 
     return () => clearInterval(interval);
   }, []);
@@ -34,10 +41,11 @@ const RecordClasses = () => {
           isVisible ? "opacity-100" : "opacity-0"
         }`}
       >
-        {recordClasses[index]}
+        {currentRecord}
       </span>
     </span>
   );
 };
 
 export { RecordClasses };
+export type { RecordType };

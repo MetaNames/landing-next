@@ -7,12 +7,23 @@ import {
 } from "unique-names-generator";
 import { MetaNamesConfig } from "@/lib/metanames";
 
-type Category = "all" | "adjectives" | "names" | "starwars" | "colors";
+export type Category = "all" | "adjectives" | "names" | "starwars" | "colors";
+
+const CATEGORY_LABELS: Record<Category, string> = {
+  all: "Mixed",
+  adjectives: "Adjectives",
+  names: "Names",
+  starwars: "Star Wars",
+  colors: "Colors",
+} as const;
+
+const WORD_COUNTS = [1, 2, 3] as const;
+type WordCount = (typeof WORD_COUNTS)[number];
 
 // Clean Star Wars names - keep only first word (some names have spaces)
 const cleanStarWars = starWars.map((name) => name.split(" ")[0]);
 
-const getDictionary = (category: Category) => {
+const getDictionary = (category: Category): string[] => {
   switch (category) {
     case "adjectives":
       return adjectives;
@@ -28,25 +39,26 @@ const getDictionary = (category: Category) => {
   }
 };
 
-const generateRandomName = (category: Category = "all", wordCount: number = 2) => {
+const generateRandomName = (category: Category, wordCount: WordCount): string => {
   const dict = getDictionary(category);
   
-  // unique-names-generator needs each word to come from a separate dictionary
-  // So we duplicate the dictionary array to create enough "dictionary slots"
+  // unique-names-generator requires each word to come from a separate dictionary
+  // Duplicate the dictionary array for each word count
   const dictionaries = Array(wordCount).fill(dict);
   
-  const customConfig = {
+  const config = {
     dictionaries,
     separator: "-",
     length: wordCount,
   };
   
-  return uniqueNamesGenerator(customConfig).toLocaleLowerCase();
+  return uniqueNamesGenerator(config).toLocaleLowerCase();
 };
 
-export const generateMetaName = (category: Category = "all", wordCount: number = 2) => {
+export const generateMetaName = (category: Category = "all", wordCount: WordCount = 2): string => {
   const generatedName = generateRandomName(category, wordCount);
   return `${generatedName}.${MetaNamesConfig.tld}`;
 };
 
-export type { Category };
+export { CATEGORY_LABELS, WORD_COUNTS };
+export type { WordCount };
