@@ -9,6 +9,9 @@ import { MetaNamesConfig } from "@/lib/metanames";
 
 type Category = "all" | "adjectives" | "names" | "starwars" | "colors";
 
+// Clean Star Wars names - keep only first word (some names have spaces)
+const cleanStarWars = starWars.map((name) => name.split(" ")[0]);
+
 const getDictionary = (category: Category) => {
   switch (category) {
     case "adjectives":
@@ -16,12 +19,12 @@ const getDictionary = (category: Category) => {
     case "names":
       return names;
     case "starwars":
-      return starWars;
+      return cleanStarWars;
     case "colors":
       return colors;
     case "all":
     default:
-      return names.concat(adjectives, colors, starWars);
+      return names.concat(adjectives, colors, cleanStarWars);
   }
 };
 
