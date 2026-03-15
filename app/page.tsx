@@ -158,7 +158,7 @@ export default function Home() {
               animate={heroInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ duration: 0.6, delay: 0.5 }}
             >
-              Save your <RecordClasses /> on your favourite web3 name
+              Your <RecordClasses /> — on one web3 name
             </motion.div>
 
             <motion.div
@@ -215,28 +215,15 @@ export default function Home() {
           </AnimatedHeading>
           
           <AnimatedText className="max-w-3xl mx-auto" delay={0.1}>
-            Register your domain and subdomains effortlessly with{" "}
-            <b>Meta Names</b>, the cutting-edge web3 domain name system for{" "}
-            <Link
-              href="https://partisiablockchain.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline font-medium px-1 hover:text-primary transition-colors"
-            >
-              Partisia Blockchain.
-            </Link>
+            Your digital identity, simplified. One <b>Meta Name</b> to rule your web3 life — no more copying and pasting long wallet addresses.
           </AnimatedText>
 
           <AnimatedText className="max-w-3xl mx-auto" delay={0.2}>
-            Create your unique Meta Names profile using your personal domain,
-            allowing you to store and manage a wide array of information all in
-            one place.
+            Store wallets, socials, websites, bios, avatars — everything that makes you, you. All behind one sleek .meta domain.
           </AnimatedText>
 
           <AnimatedText className="max-w-3xl mx-auto" delay={0.3}>
-            With Meta Names, you can effortlessly organize your wallet addresses,
-            social media handles (including Discord and Twitter), website links,
-            and much more under your unique domain.
+            Built on <b>Partisia Blockchain</b> — fast, private, and built for real-world use. No gas wars. No stress.
           </AnimatedText>
 
           <div className="mt-8">
@@ -255,18 +242,18 @@ export default function Home() {
             Fresh domains
           </AnimatedHeading>
           <AnimatedText className="mb-8" delay={0.1}>
-            Check out the freshest domains just claimed on Meta Names!
+            See what's trending. Names are going fast.
           </AnimatedText>
           <AnimatedText className="mb-8" delay={0.2}>
-            Did you just register a domain? Brag about your new Meta Name in our{" "}
+            Got one? Drop it in our{" "}
             <Link
               href="https://t.me/mpc_metanames"
               target="_blank"
               rel="noopener noreferrer"
               className="underline font-medium px-1 hover:text-primary-foreground transition-colors"
             >
-              community channel
-            </Link>
+              Telegram
+            </Link> — let's see it.
           </AnimatedText>
           <RecentDomains />
         </Section>
@@ -277,9 +264,7 @@ export default function Home() {
             Find yours
           </AnimatedHeading>
           <AnimatedText className="mb-4" delay={0.1}>
-            {"Running low on ideas? No worries, we've got your back!"}
-            <br />
-            {"How about snagging the following domain?"}
+            Can't decide? Let's spark some inspiration.
           </AnimatedText>
           <NamesGenerator />
         </Section>
@@ -291,30 +276,24 @@ export default function Home() {
           </AnimatedHeading>
           
           <AnimatedText className="max-w-3xl mx-auto" delay={0.1}>
-            Discover the ease of web3 domain management with <b>Meta Names SDK</b>{" "}
-            for Partisia Blockchain.
+            Plug into the Meta Names SDK. Simple APIs, powerful possibilities.
           </AnimatedText>
           
           <AnimatedText className="max-w-3xl mx-auto" delay={0.2}>
-            Our platform offers simple domain and subdomain registration,
-            versatile information embedding, and a developer-friendly toolkit.
+            Register domains, embed data, manage subdomains — all programmatically. 
+            Built for devs who ship.
           </AnimatedText>
           
           <AnimatedText className="max-w-3xl mx-auto" delay={0.3}>
+            Docs → Community → Ship. {" "}
             <Link
               href="https://t.me/mpc_metanames"
               target="_blank"
               rel="noopener noreferrer"
               className="underline font-medium px-1 hover:text-primary-foreground transition-colors"
             >
-              Join our supportive community
-            </Link>
-            , access detailed documentation, and transform your applications with
-            the power of Meta Names.
-          </AnimatedText>
-          
-          <AnimatedText className="max-w-3xl mx-auto" delay={0.4}>
-            Your journey into the future of web3 starts here.
+              Join the builders
+            </Link>.
           </AnimatedText>
 
           <motion.div
