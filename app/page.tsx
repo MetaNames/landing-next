@@ -1,17 +1,32 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, lazy, Suspense } from "react";
 import Link from "next/link";
 import { motion, useInView } from "framer-motion";
 import { MdOpenInNew } from "react-icons/md";
 
 import { Button } from "@/components/Button";
-import { NamesGenerator } from "@/components/NamesGenerator";
-import { RecentDomains } from "@/components/RecentDomains";
 import { RecordClasses } from "@/components/RecordClasses";
-import { Section } from "@/components/Section";
-import { Stats } from "@/components/Stats";
 import routes from "@/constants/routes";
+import { StatsSkeleton } from "@/components/ui/LoadingSkeleton";
+
+// Lazy load heavy components
+const NamesGenerator = lazy(() => import("@/components/NamesGenerator").then(mod => ({ default: mod.NamesGenerator })));
+const RecentDomains = lazy(() => import("@/components/RecentDomains").then(mod => ({ default: mod.RecentDomains })));
+const Section = lazy(() => import("@/components/Section").then(mod => ({ default: mod.Section })));
+const Stats = lazy(() => import("@/components/Stats").then(mod => ({ default: mod.Stats })));
+
+const NamesGeneratorFallback = () => (
+  <div className="w-full max-w-2xl mx-auto h-64 flex items-center justify-center">
+    <div className="animate-pulse text-white/40">Loading...</div>
+  </div>
+);
+
+const RecentDomainsFallback = () => (
+  <div className="w-full overflow-hidden h-32">
+    <div className="animate-pulse bg-white/5 h-full w-[200%] rounded-2xl" />
+  </div>
+);
 
 // Skip link component for accessibility
 const SkipLink = () => (
@@ -268,39 +283,46 @@ export default function Home() {
           </AnimatedText>
 
           <div className="mt-8">
-            <Stats />
+            <Suspense fallback={<StatsSkeleton />}>
+              <Stats />
+            </Suspense>
           </div>
         </Section>
 
         {/* Recent Domains Section */}
-        <Section 
-          variant="primary" 
-          id="recent" 
-          contentClassName="px-0 md:px-0 max-w-full"
-          delay={0.2}
-        >
-          <AnimatedHeading className="text-4xl md:text-5xl font-medium mb-4 tracking-wide uppercase" delay={0}>
-            Fresh domains
-          </AnimatedHeading>
-          <AnimatedText className="mb-8" delay={0.1}>
-            See what's trending. Names are going fast.
-          </AnimatedText>
-          <RecentDomains />
-        </Section>
+        <Suspense fallback={<RecentDomainsFallback />}>
+          <Section 
+            variant="primary" 
+            id="recent" 
+            contentClassName="px-0 md:px-0 max-w-full"
+            delay={0.2}
+          >
+            <AnimatedHeading className="text-4xl md:text-5xl font-medium mb-4 tracking-wide uppercase" delay={0}>
+              Fresh domains
+            </AnimatedHeading>
+            <AnimatedText className="mb-8" delay={0.1}>
+              See what's trending. Names are going fast.
+            </AnimatedText>
+            <RecentDomains />
+          </Section>
+        </Suspense>
 
         {/* Name Generator Section */}
-        <Section variant="secondary" id="generator" delay={0.3}>
-          <AnimatedHeading className="text-4xl md:text-5xl font-medium mb-4 tracking-wide uppercase" delay={0}>
-            Find yours
-          </AnimatedHeading>
-          <AnimatedText className="mb-4" delay={0.1}>
-            Can't decide? Let's spark some inspiration.
-          </AnimatedText>
-          <NamesGenerator />
-        </Section>
+        <Suspense fallback={<NamesGeneratorFallback />}>
+          <Section variant="secondary" id="generator" delay={0.3}>
+            <AnimatedHeading className="text-4xl md:text-5xl font-medium mb-4 tracking-wide uppercase" delay={0}>
+              Find yours
+            </AnimatedHeading>
+            <AnimatedText className="mb-4" delay={0.1}>
+              Can't decide? Let's spark some inspiration.
+            </AnimatedText>
+            <NamesGenerator />
+          </Section>
+        </Suspense>
 
         {/* SDK Section */}
-        <Section variant="primary" id="sdk" delay={0.4}>
+        <Suspense fallback={<div className="h-64" />}>
+          <Section variant="primary" id="sdk" delay={0.4}>
           <AnimatedHeading className="text-4xl md:text-5xl font-medium mb-8 tracking-wide uppercase" delay={0}>
             Build with us
           </AnimatedHeading>
@@ -343,6 +365,7 @@ export default function Home() {
             </Button>
           </motion.div>
         </Section>
+        </Suspense>
       </main>
     </>
   );
