@@ -9,8 +9,6 @@ import { MetaNamesConfig } from "@/lib/metanames";
 
 type Category = "all" | "adjectives" | "names" | "starwars" | "colors";
 
-let rand = Math.floor(Math.random()) + 1;
-
 const allDictionaries = names.concat(adjectives, colors, starWars);
 
 const getDictionary = (category: Category) => {
@@ -40,16 +38,21 @@ function shuffleArray<T>(arr: T[]): T[] {
 
 const generateRandomName = (category: Category = "all", wordCount: number = 2) => {
   const dict = getDictionary(category);
-  const shuffled = shuffleArray(dict);
+  
+  // Ensure word count doesn't exceed dictionary length
+  const safeWordCount = Math.min(wordCount, dict.length);
   
   const customConfig = {
-    dictionaries: [shuffled],
+    dictionaries: [shuffled(dict)],
     separator: "-",
-    length: wordCount,
+    length: safeWordCount,
   };
   
   return uniqueNamesGenerator(customConfig).toLocaleLowerCase();
 };
+
+// Pre-shuffle dictionaries at startup
+const shuffled = <T>(arr: T[]): T[] => shuffleArray(arr);
 
 export const generateMetaName = (category: Category = "all", wordCount: number = 2) => {
   const generatedName = generateRandomName(category, wordCount);
