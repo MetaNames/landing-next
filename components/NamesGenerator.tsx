@@ -63,10 +63,10 @@ const NamesGenerator = () => {
             <button
               key={cat.id}
               onClick={() => handleCategoryChange(cat.id)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 touch-manipulation ${
                 selectedCategory === cat.id
                   ? "bg-purple-500 text-white shadow-lg shadow-purple-500/30"
-                  : "bg-white/10 text-white/70 hover:bg-white/20 hover:text-white"
+                  : "bg-white/10 text-white/70 hover:bg-white/20 hover:text-white active:bg-white/30"
               }`}
             >
               {selectedCategory === cat.id && <MdCheck className="inline mr-1" />}
@@ -86,10 +86,10 @@ const NamesGenerator = () => {
             <button
               key={count}
               onClick={() => handleWordCountChange(count)}
-              className={`w-12 h-12 rounded-xl text-lg font-bold transition-all duration-200 ${
+              className={`w-12 h-12 rounded-xl text-lg font-bold transition-all duration-200 touch-manipulation ${
                 wordCount === count
                   ? "bg-purple-500 text-white shadow-lg shadow-purple-500/30 scale-110"
-                  : "bg-white/10 text-white/70 hover:bg-white/20 hover:text-white"
+                  : "bg-white/10 text-white/70 hover:bg-white/20 hover:text-white active:bg-white/30"
               }`}
             >
               {count}

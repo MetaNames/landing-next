@@ -41,7 +41,7 @@ const RecentDomains = () => {
               role="listitem"
             >
               <div
-                className="group relative h-full w-[26rem] cursor-pointer rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] hover:bg-white/10 hover:border-white/20 hover:shadow-lg hover:shadow-purple-500/20"
+                className="group relative h-full w-[26rem] cursor-pointer rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] hover:bg-white/10 hover:border-white/20 hover:shadow-lg hover:shadow-purple-500/20 active:scale-[0.98] touch-manipulation"
                 onClick={() => router.push(`${routes.domains.path}/${item.name}`)}
                 onKeyDown={(e) => handleKeyDown(e, item.name)}
                 tabIndex={0}

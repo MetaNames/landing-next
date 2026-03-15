@@ -97,10 +97,22 @@ export default function Home() {
             }}
           />
           
+          {/* Mesh gradient overlay */}
+          <div 
+            className="absolute inset-0 opacity-30"
+            style={{
+              backgroundImage: `
+                radial-gradient(circle at 20% 80%, rgba(120, 0, 255, 0.4) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0, 200, 255, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(255, 0, 200, 0.2) 0%, transparent 40%)
+              `,
+            }}
+          />
+          
           {/* Floating shapes for visual interest */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
             <motion.div
-              className="absolute top-20 left-10 w-32 h-32 bg-white/10 rounded-full blur-xl"
+              className="absolute top-20 left-10 w-32 h-32 bg-purple-400/20 rounded-full blur-xl"
               animate={{ 
                 x: [0, 30, 0],
                 y: [0, -20, 0],
@@ -108,7 +120,7 @@ export default function Home() {
               transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
             />
             <motion.div
-              className="absolute bottom-20 right-10 w-48 h-48 bg-white/5 rounded-full blur-2xl"
+              className="absolute bottom-20 right-10 w-48 h-48 bg-indigo-400/10 rounded-full blur-2xl"
               animate={{ 
                 x: [0, -30, 0],
                 y: [0, 30, 0],
@@ -121,6 +133,35 @@ export default function Home() {
                 scale: [1, 1.2, 1],
               }}
               transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+            />
+            {/* Additional floating shapes */}
+            <motion.div
+              className="absolute top-1/3 left-1/4 w-16 h-16 bg-pink-400/15 rounded-full blur-md"
+              animate={{ 
+                x: [0, 20, 0],
+                y: [0, 15, 0],
+                rotate: [0, 180, 360],
+              }}
+              transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+            />
+            <motion.div
+              className="absolute bottom-1/3 right-1/3 w-20 h-20 bg-cyan-400/10 rounded-full blur-lg"
+              animate={{ 
+                scale: [1, 1.3, 1],
+                x: [0, -15, 0],
+              }}
+              transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+            />
+            {/* Grid pattern overlay */}
+            <div 
+              className="absolute inset-0 opacity-5"
+              style={{
+                backgroundImage: `
+                  linear-gradient(white 1px, transparent 1px),
+                  linear-gradient(90deg, white 1px, transparent 1px)
+                `,
+                backgroundSize: '60px 60px'
+              }}
             />
           </div>
 
