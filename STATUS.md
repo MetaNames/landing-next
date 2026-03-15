@@ -51,6 +51,7 @@
 | 11 | 2026-03-14 | 21:04 UTC | Build passes (Next.js 16.1.6), working tree clean, PR #2 still open awaiting merge | None |
 | 12 | 2026-03-14 | 22:04 UTC | Build passes (Next.js 16.1.6), working tree clean, PR #2 (feat: Modernize landing page v2) still open awaiting merge | None |
 | 13 | 2026-03-14 | 23:04 UTC | Build passes (Next.js 16.1.6), committed & pushed to modernize-landing-v2, PR #2 still open awaiting merge | None |
+| 14 | 2026-03-15 | 00:04 UTC | CI was failing (Vercel auth null error). Fixed: Added build step to workflow + updated checkout to v4. Pushed fix. | None |
 
 ---
 
