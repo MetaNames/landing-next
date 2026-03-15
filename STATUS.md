@@ -54,6 +54,9 @@
 | 15 | 2026-03-15 | 08:04 UTC | Build passes (✓ Compiled successfully). Vercel deploy step failing with "Cannot read properties of null (reading 'login')" - infrastructure issue, not code. | ⚠️ Vercel credentials may need refresh |
 | 16 | 2026-03-15 | 09:04 UTC | Build passes ✅. Vercel deploy still failing with null login error - infrastructure issue (expired token?), not code. | ⚠️ Vercel credentials need refresh |
 | 17 | 2026-03-15 | 10:30 UTC | CI/Vercel issue resolved. Focus shifted to visual improvements — new visual assets, better styling, animations | None |
+| 18 | 2026-03-15 | 11:04 UTC | Added hover glow effect to CTA buttons | None |
+| 19 | 2026-03-15 | 22:24 UTC | Removed deploy from CI, build-only workflow | None |
+| 20 | 2026-03-15 | 22:26 UTC | Fixed headline flashing — record type now cycles sequentially (not random), slower 3s interval, better styling | None |
 | 18 | 2026-03-15 | 13:04 UTC | Build passes ✅. Vercel deploy still failing with "Cannot read properties of null (reading 'login')" — needs Vercel token refresh. | ⚠️ Vercel credentials need refresh |
 | 20 | 2026-03-15 | 19:04 UTC | Build passes ✅. Vercel deploy failing with "Cannot read properties of null (reading 'login')" — Vercel token expired/invalid, not code issue. Notified Marco. | ⚠️ Vercel credentials need refresh |
 

@@ -19,7 +19,7 @@ const RecordClasses = () => {
       setTimeout(() => {
         setIndex((prev) => (prev + 1) % recordClasses.length);
         setIsVisible(true);
-      }, 500);
+      }, 300);
     }, 3000);
 
     return () => clearInterval(interval);
@@ -27,10 +27,10 @@ const RecordClasses = () => {
 
   return (
     <span
-      className="bg-white/20 backdrop-blur-sm text-white px-2 py-1 text-sm font-bold rounded-md mx-1 inline-block min-w-[100px] text-center"
+      className="bg-white/20 backdrop-blur-sm text-white px-3 py-1 text-sm font-bold rounded-md mx-1 inline-block min-w-[110px] text-center"
     >
       <span
-        className={`transition-opacity duration-500 ${
+        className={`transition-opacity duration-300 ${
           isVisible ? "opacity-100" : "opacity-0"
         }`}
       >
