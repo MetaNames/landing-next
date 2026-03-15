@@ -1,45 +1,51 @@
 "use client";
-import { useEffect, useState } from "react";
 
-const recordClasses = [
+import { useEffect, useState, useMemo } from "react";
+import { ANIMATION } from "@/lib/constants";
+
+const RECORD_TYPES = [
   "wallet address",
   "social handles",
   "website URL",
   "bio",
   "avatar",
-];
+] as const;
+
+type RecordType = (typeof RECORD_TYPES)[number];
 
 const RecordClasses = () => {
-  const [recordClass, setRecordClass] = useState(recordClasses[0]);
+  const [index, setIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
+
+  const currentRecord = useMemo(() => RECORD_TYPES[index], [index]);
 
   useEffect(() => {
     const interval = setInterval(() => {
       setIsVisible(false);
+      
       setTimeout(() => {
-        setRecordClass(
-          recordClasses[Math.floor(Math.random() * recordClasses.length)]
-        );
+        setIndex((prev) => (prev + 1) % RECORD_TYPES.length);
         setIsVisible(true);
-      }, 500); // Adjust this timeout based on your desired fade duration
-    }, 5000); // Change the interval duration as needed
+      }, ANIMATION.RECORD_FADE_DURATION);
+    }, ANIMATION.RECORD_CHANGE_INTERVAL);
 
     return () => clearInterval(interval);
   }, []);
 
   return (
     <span
-      className={`bg-white text-primary p-2 text-sm font-bold rounded-md mx-2`}
+      className="bg-white/20 backdrop-blur-sm text-white px-4 py-1.5 text-base md:text-lg font-bold rounded-md mx-1 inline-block min-w-[130px] text-center align-middle"
     >
       <span
-        className={`transition-opacity duration-1000 ${
+        className={`transition-opacity duration-300 ${
           isVisible ? "opacity-100" : "opacity-0"
         }`}
       >
-        {recordClass}
+        {currentRecord}
       </span>
     </span>
   );
 };
 
 export { RecordClasses };
+export type { RecordType };

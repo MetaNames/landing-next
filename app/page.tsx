@@ -1,123 +1,372 @@
+"use client";
+
+import { useRef, lazy, Suspense } from "react";
 import Link from "next/link";
+import { motion, useInView } from "framer-motion";
 import { MdOpenInNew } from "react-icons/md";
 
 import { Button } from "@/components/Button";
-import { NamesGenerator } from "@/components/NamesGenerator";
-import { RecentDomains } from "@/components/RecentDomains";
 import { RecordClasses } from "@/components/RecordClasses";
-import { Section } from "@/components/Section";
-import { Stats } from "@/components/Stats";
+import routes from "@/constants/routes";
+import { StatsSkeleton } from "@/components/ui/LoadingSkeleton";
+
+// Lazy load heavy components
+const NamesGenerator = lazy(() => import("@/components/NamesGenerator").then(mod => ({ default: mod.NamesGenerator })));
+const RecentDomains = lazy(() => import("@/components/RecentDomains").then(mod => ({ default: mod.RecentDomains })));
+const Section = lazy(() => import("@/components/Section").then(mod => ({ default: mod.Section })));
+const Stats = lazy(() => import("@/components/Stats").then(mod => ({ default: mod.Stats })));
+
+const NamesGeneratorFallback = () => (
+  <div className="w-full max-w-2xl mx-auto h-64 flex items-center justify-center">
+    <div className="animate-pulse text-white/40">Loading...</div>
+  </div>
+);
+
+const RecentDomainsFallback = () => (
+  <div className="w-full overflow-hidden h-32">
+    <div className="animate-pulse bg-white/5 h-full w-[200%] rounded-2xl" />
+  </div>
+);
+
+// Skip link component for accessibility
+const SkipLink = () => (
+  <a
+    href="#main-content"
+    className="skip-link"
+  >
+    Skip to main content
+  </a>
+);
+
+// Animated heading component
+const AnimatedHeading = ({ 
+  children, 
+  className,
+  delay = 0 
+}: { 
+  children: React.ReactNode; 
+  className?: string;
+  delay?: number;
+}) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+  return (
+    <motion.h2
+      ref={ref}
+      className={className}
+      initial={{ opacity: 0, y: 30 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+      transition={{ duration: 0.6, delay, ease: "easeOut" }}
+    >
+      {children}
+    </motion.h2>
+  );
+};
+
+// Animated paragraph
+const AnimatedText = ({ 
+  children, 
+  className,
+  delay = 0 
+}: { 
+  children: React.ReactNode; 
+  className?: string;
+  delay?: number;
+}) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-50px" });
+
+  return (
+    <motion.p
+      ref={ref}
+      className={className}
+      initial={{ opacity: 0, y: 20 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+      transition={{ duration: 0.5, delay, ease: "easeOut" }}
+    >
+      {children}
+    </motion.p>
+  );
+};
 
 export default function Home() {
-  const Subtitle = ({ title }: { title: string }) => (
-    <h2 className="text-5xl font-medium">{title}</h2>
-  )
+  const heroRef = useRef(null);
+  const heroInView = useInView(heroRef, { once: true });
+
   return (
-    <main className="min-h-screen">
-      <Section variant="primary" className="min-h-[450px] space-y-8">
-        <h1 className="text-7xl font-medium py-8">META NAMES</h1>
-        <span className="text-xs">
-          Powered by{" "}
-          <Link
-            className="font-semibold"
-            href="https://partisiablockchain.com/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Partisia Blockchain
-          </Link>
-        </span>
-
-        <h6 className="text-xl font-medium py-8 leading-loose">
-          Save your <RecordClasses /> on your favourite web3 name
-        </h6>
-      </Section>
-
-      <Section variant={"secondary"}>
-        <Stats />
-        <Subtitle title="The only name you need" />
-        <p>
-          Register your domain and subdomains effortlessly with{" "}
-          <b>Meta Names</b>, the cutting-edge web3 domain name system for
-          <Link
-            href="https://partisiablockchain.com/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="underline font-medium px-2"
-          >
-            Partisia Blockchain.
-          </Link>
-        </p>
-        <p>
-          Create your unique Meta Names profile using your personal domain,
-          allowing you to store and manage a wide array of information all in
-          one place.
-        </p>
-        <p>
-          With Meta Names, you can effortlessly organize your wallet addresses,
-          social media handles (including Discord and Twitter), website links,
-          and much more under your unique domain.
-        </p>
-      </Section>
-
-      <Section variant="primary" contentClassName="px-0 md:px-0 max-w-full">
-        <Subtitle title="Recently registered domains" />
-        <p>Check out the freshest domains just claimed on Meta Names!</p>
-        <p>
-          Did you just register a domain? Brag your new Meta Name in our{" "}
-          <Link
-            href="https://t.me/mpc_metanames"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="underline font-medium px-2"
-          >
-            community channel
-          </Link>
-        </p>
-        <RecentDomains />
-      </Section>
-
-      <Section variant={"secondary"}>
-        <Subtitle title="Generate your Meta Name" />
-        <p>
-          {"Running low on ideas? No worries, we've got your back!"}
-          <br />
-          {"How about snagging the following domain?"}
-        </p>
-
-        <NamesGenerator />
-      </Section>
-
-      <Section variant="primary">
-        <Subtitle title="Integrate with Meta Names SDK" />
-        <p>
-          Discover the ease of web3 domain management with <b>Meta Names SDK</b>{" "}
-          for Partisia Blockchain.
-          <br />
-          Our platform offers simple domain and subdomain registration,
-          versatile information embedding, and a developer-friendly toolkit.
-          <br />
-          <Link
-            href="https://t.me/mpc_metanames"
-            target="_blank"
-            rel="noopener noreferrrer"
-            className="underline font-medium px-2"
-          >
-            Join our supportive community
-          </Link>
-          , access detailed documentation, and transform your applications with
-          the power of Meta Names.
-          <br />
-          Your journey into the future of web3 starts here.
-        </p>
-        <Button
-          icon={<MdOpenInNew />}
-          variant="secondary"
-          href={"https://docs.metanames.app"}
+    <>
+      <SkipLink />
+      <main id="main-content" className="min-h-screen">
+        {/* Hero Section */}
+        <section 
+          ref={heroRef}
+          className="relative min-h-[500px] md:min-h-[600px] flex flex-col items-center justify-center overflow-hidden"
+          aria-labelledby="hero-title"
         >
-          Learn More
-        </Button>
-      </Section>
-    </main>
+          {/* Animated background gradient */}
+          <div 
+            className="absolute inset-0 bg-gradient-to-br from-primary via-purple-700 to-indigo-900 animate-gradient"
+            style={{
+              backgroundSize: "200% 200%",
+            }}
+          />
+          
+          {/* Mesh gradient overlay */}
+          <div 
+            className="absolute inset-0 opacity-30"
+            style={{
+              backgroundImage: `
+                radial-gradient(circle at 20% 80%, rgba(120, 0, 255, 0.4) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0, 200, 255, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(255, 0, 200, 0.2) 0%, transparent 40%)
+              `,
+            }}
+          />
+          
+          {/* Floating shapes for visual interest */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+            <motion.div
+              className="absolute top-20 left-10 w-32 h-32 bg-purple-400/20 rounded-full blur-xl"
+              animate={{ 
+                x: [0, 30, 0],
+                y: [0, -20, 0],
+              }}
+              transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+            />
+            <motion.div
+              className="absolute bottom-20 right-10 w-48 h-48 bg-indigo-400/10 rounded-full blur-2xl"
+              animate={{ 
+                x: [0, -30, 0],
+                y: [0, 30, 0],
+              }}
+              transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+            />
+            <motion.div
+              className="absolute top-1/2 right-1/4 w-24 h-24 bg-purple-400/20 rounded-full blur-lg"
+              animate={{ 
+                scale: [1, 1.2, 1],
+              }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+            />
+            {/* Additional floating shapes */}
+            <motion.div
+              className="absolute top-1/3 left-1/4 w-16 h-16 bg-pink-400/15 rounded-full blur-md"
+              animate={{ 
+                x: [0, 20, 0],
+                y: [0, 15, 0],
+                rotate: [0, 180, 360],
+              }}
+              transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+            />
+            <motion.div
+              className="absolute bottom-1/3 right-1/3 w-20 h-20 bg-cyan-400/10 rounded-full blur-lg"
+              animate={{ 
+                scale: [1, 1.3, 1],
+                x: [0, -15, 0],
+              }}
+              transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+            />
+            {/* Grid pattern overlay */}
+            <div 
+              className="absolute inset-0 opacity-5"
+              style={{
+                backgroundImage: `
+                  linear-gradient(white 1px, transparent 1px),
+                  linear-gradient(90deg, white 1px, transparent 1px)
+                `,
+                backgroundSize: '60px 60px'
+              }}
+            />
+          </div>
+
+          <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
+            <motion.h1
+              id="hero-title"
+              className="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-4 tracking-tight"
+              initial={{ opacity: 0, y: 40 }}
+              animate={heroInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+            >
+              META NAMES
+            </motion.h1>
+            
+            <motion.p
+              className="text-sm md:text-base text-white/80 mb-8"
+              initial={{ opacity: 0 }}
+              animate={heroInView ? { opacity: 1 } : { opacity: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+            >
+              Powered by{" "}
+              <Link
+                className="font-semibold text-white hover:text-white/80 underline underline-offset-4 transition-colors"
+                href="https://partisiablockchain.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Partisia Blockchain
+              </Link>
+            </motion.p>
+
+            <motion.div
+              className="text-xl md:text-2xl lg:text-3xl font-light text-white/90"
+              initial={{ opacity: 0, y: 20 }}
+              animate={heroInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ duration: 0.6, delay: 0.5 }}
+            >
+              Your <RecordClasses /> — on one web3 name
+            </motion.div>
+
+            <motion.div
+              className="mt-8"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={heroInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.5, delay: 0.7 }}
+            >
+              <Button
+                href={routes.app.path}
+                variant="secondary"
+                size="lg"
+                icon={<MdOpenInNew />}
+              >
+                Launch App
+              </Button>
+            </motion.div>
+          </div>
+
+          {/* Scroll indicator */}
+          <motion.div
+            className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/60"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.2 }}
+            aria-hidden="true"
+          >
+            <motion.div
+              animate={{ y: [0, 8, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+              className="flex flex-col items-center"
+            >
+              <svg 
+                className="w-6 h-6" 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+              >
+                <path 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  strokeWidth={2} 
+                  d="M19 14l-7 7m0 0l-7-7m7 7V3" 
+                />
+              </svg>
+            </motion.div>
+          </motion.div>
+        </section>
+
+        {/* Stats Section */}
+        <Section variant="secondary" id="features" delay={0.1}>
+          <AnimatedHeading className="text-4xl md:text-5xl font-medium mb-8 tracking-wide uppercase" delay={0}>
+            One name. All you need.
+          </AnimatedHeading>
+          
+          <AnimatedText className="max-w-3xl mx-auto" delay={0.1}>
+            Your digital identity, simplified. One <b>Meta Name</b> to rule your web3 life — no more copying and pasting long wallet addresses.
+          </AnimatedText>
+
+          <AnimatedText className="max-w-3xl mx-auto" delay={0.2}>
+            Store wallets, socials, websites, bios, avatars — everything that makes you, you. All behind one sleek .mpc domain.
+          </AnimatedText>
+
+          <AnimatedText className="max-w-3xl mx-auto" delay={0.3}>
+            Built on <b>Partisia Blockchain</b> — fast, private, and built for real-world use. No gas wars. No stress.
+          </AnimatedText>
+
+          <div className="mt-8">
+            <Suspense fallback={<StatsSkeleton />}>
+              <Stats />
+            </Suspense>
+          </div>
+        </Section>
+
+        {/* Recent Domains Section */}
+        <Suspense fallback={<RecentDomainsFallback />}>
+          <Section 
+            variant="primary" 
+            id="recent" 
+            contentClassName="px-0 md:px-0 max-w-full"
+            delay={0.2}
+          >
+            <AnimatedHeading className="text-4xl md:text-5xl font-medium mb-4 tracking-wide uppercase" delay={0}>
+              Fresh domains
+            </AnimatedHeading>
+            <AnimatedText className="mb-8" delay={0.1}>
+              See what's trending. Names are going fast.
+            </AnimatedText>
+            <RecentDomains />
+          </Section>
+        </Suspense>
+
+        {/* Name Generator Section */}
+        <Suspense fallback={<NamesGeneratorFallback />}>
+          <Section variant="secondary" id="generator" delay={0.3}>
+            <AnimatedHeading className="text-4xl md:text-5xl font-medium mb-4 tracking-wide uppercase" delay={0}>
+              Find yours
+            </AnimatedHeading>
+            <AnimatedText className="mb-4" delay={0.1}>
+              Can't decide? Let's spark some inspiration.
+            </AnimatedText>
+            <NamesGenerator />
+          </Section>
+        </Suspense>
+
+        {/* SDK Section */}
+        <Suspense fallback={<div className="h-64" />}>
+          <Section variant="primary" id="sdk" delay={0.4}>
+          <AnimatedHeading className="text-4xl md:text-5xl font-medium mb-8 tracking-wide uppercase" delay={0}>
+            Build with us
+          </AnimatedHeading>
+          
+          <AnimatedText className="max-w-3xl mx-auto" delay={0.1}>
+            Plug into the Meta Names SDK. Simple APIs, powerful possibilities.
+          </AnimatedText>
+          
+          <AnimatedText className="max-w-3xl mx-auto" delay={0.2}>
+            Register domains, embed data, manage subdomains — all programmatically. 
+            Built for devs who ship.
+          </AnimatedText>
+          
+          <AnimatedText className="max-w-3xl mx-auto" delay={0.3}>
+            Docs → Community → Ship. {" "}
+            <Link
+              href="https://t.me/mpc_metanames"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline font-medium px-1 hover:text-primary-foreground transition-colors"
+            >
+              Join the builders
+            </Link>.
+          </AnimatedText>
+
+          <motion.div
+            className="mt-8"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.5 }}
+          >
+            <Button
+              icon={<MdOpenInNew />}
+              variant="secondary"
+              href={"https://docs.metanames.app"}
+              size="lg"
+            >
+              Learn More
+            </Button>
+          </motion.div>
+        </Section>
+        </Suspense>
+      </main>
+    </>
   );
 }
