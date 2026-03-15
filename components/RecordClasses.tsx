@@ -10,33 +10,31 @@ const recordClasses = [
 ];
 
 const RecordClasses = () => {
-  const [recordClass, setRecordClass] = useState(recordClasses[0]);
+  const [index, setIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
     const interval = setInterval(() => {
       setIsVisible(false);
       setTimeout(() => {
-        setRecordClass(
-          recordClasses[Math.floor(Math.random() * recordClasses.length)]
-        );
+        setIndex((prev) => (prev + 1) % recordClasses.length);
         setIsVisible(true);
-      }, 500); // Adjust this timeout based on your desired fade duration
-    }, 5000); // Change the interval duration as needed
+      }, 500);
+    }, 3000);
 
     return () => clearInterval(interval);
   }, []);
 
   return (
     <span
-      className={`bg-white text-primary p-2 text-sm font-bold rounded-md mx-2`}
+      className="bg-white/20 backdrop-blur-sm text-white px-2 py-1 text-sm font-bold rounded-md mx-1 inline-block min-w-[100px] text-center"
     >
       <span
-        className={`transition-opacity duration-1000 ${
+        className={`transition-opacity duration-500 ${
           isVisible ? "opacity-100" : "opacity-0"
         }`}
       >
-        {recordClass}
+        {recordClasses[index]}
       </span>
     </span>
   );
