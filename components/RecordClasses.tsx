@@ -34,7 +34,7 @@ const RecordClasses = () => {
 
   return (
     <span
-      className="bg-white/20 backdrop-blur-sm text-white px-3 py-1 text-sm font-bold rounded-md mx-1 inline-block min-w-[110px] text-center"
+      className="bg-white/20 backdrop-blur-sm text-white px-4 py-1.5 text-base md:text-lg font-bold rounded-md mx-1 inline-block min-w-[130px] text-center align-middle"
     >
       <span
         className={`transition-opacity duration-300 ${
