@@ -2,8 +2,6 @@ name: Deploy
 on:
   push:
     branches: [main, staging]
-  pull_request:
-    types: [opened, synchronize, reopened]
   workflow_dispatch:
 jobs:
   deploy:
