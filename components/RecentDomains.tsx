@@ -54,7 +54,7 @@ const RecentDomains = () => {
                       {item.name}
                     </span>
                     <span className="rounded-full bg-purple-500/20 px-3 py-1 text-xs font-medium text-purple-200 opacity-0 transition-opacity group-hover:opacity-100">
-                      .meta
+                      .mpc
                     </span>
                   </div>
 
