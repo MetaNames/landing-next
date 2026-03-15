@@ -30,7 +30,7 @@ const Header = (props: HeaderProps) => {
           aria-label="MetaNames Home"
         >
           <Logo />
-          <span className="text-white self-center text-lg md:text-xl font-semibold whitespace-nowrap">
+          <span className="text-white self-center text-lg md:text-xl font-semibold whitespace-nowrap [-webkit-text-stroke:0.5px_rgba(255,255,255,0.8)]">
             MetaNames
           </span>
         </Link>
@@ -41,7 +41,7 @@ const Header = (props: HeaderProps) => {
             <Link
               key={link.href}
               href={link.href}
-              className="text-white/80 hover:text-white transition-colors text-sm font-medium"
+              className="text-white/80 hover:text-white transition-colors text-sm font-medium [-webkit-text-stroke:0.3px_rgba(255,255,255,0.8)]"
             >
               {link.label}
             </Link>
