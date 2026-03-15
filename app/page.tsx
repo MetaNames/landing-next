@@ -219,7 +219,7 @@ export default function Home() {
           </AnimatedText>
 
           <AnimatedText className="max-w-3xl mx-auto" delay={0.2}>
-            Store wallets, socials, websites, bios, avatars — everything that makes you, you. All behind one sleek .meta domain.
+            Store wallets, socials, websites, bios, avatars — everything that makes you, you. All behind one sleek .mpc domain.
           </AnimatedText>
 
           <AnimatedText className="max-w-3xl mx-auto" delay={0.3}>
