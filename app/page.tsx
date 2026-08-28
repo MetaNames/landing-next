@@ -5,6 +5,7 @@ import { ExternalLink } from "lucide-react";
 
 import { DomainSearch } from "@/components/domain-search";
 import { Faq } from "@/components/faq";
+import { HashScroll } from "@/components/hash-scroll";
 import { HowItWorks } from "@/components/how-it-works";
 import { RecordClasses } from "@/components/record-classes";
 import { Section } from "@/components/section";
@@ -12,6 +13,7 @@ import { StructuredData } from "@/components/structured-data";
 import { Button } from "@/components/ui/button";
 import {
   GeneratorSkeleton,
+  PricingSkeleton,
   RecentDomainsSkeleton,
   StatsSkeleton,
 } from "@/components/ui/loading-skeleton";
@@ -33,11 +35,15 @@ const RecentDomains = lazy(() =>
 const Stats = lazy(() =>
   import("@/components/stats").then((m) => ({ default: m.Stats })),
 );
+const Pricing = lazy(() =>
+  import("@/components/pricing").then((m) => ({ default: m.Pricing })),
+);
 
 export default function Home() {
   return (
     <>
       <StructuredData />
+      <HashScroll />
       {/* Hero */}
       <section
         className="spotlight-beam flex flex-col items-center gap-8 py-16 sm:py-24 w-full"
@@ -129,6 +135,21 @@ export default function Home() {
         </p>
         <Suspense fallback={<GeneratorSkeleton />}>
           <NamesGenerator />
+        </Suspense>
+      </Section>
+
+      {/* Pricing */}
+      <Section
+        id="pricing"
+        title="Priced by length"
+        eyebrow="Live from the contract"
+      >
+        <p className="text-muted-foreground text-balance">
+          One payment, no renewal. Shorter names cost more — the numbers below
+          are read straight from the registration contract.
+        </p>
+        <Suspense fallback={<PricingSkeleton />}>
+          <Pricing />
         </Suspense>
       </Section>
 

@@ -2,7 +2,7 @@ import { MetadataRoute } from "next";
 
 import { config } from "@/lib/config";
 
-const SECTIONS = ["features", "recent", "generator", "faq", "sdk"];
+const SECTIONS = ["features", "recent", "generator", "pricing", "faq", "sdk"];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date();

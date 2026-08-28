@@ -1,5 +1,6 @@
 "use client";
 
+import { isValidElement } from "react";
 import { Button as ButtonPrimitive } from "@base-ui/react/button";
 import { cva, type VariantProps } from "class-variance-authority";
 
@@ -46,12 +47,24 @@ function Button({
   className,
   variant = "default",
   size = "default",
+  nativeButton,
+  render,
   ...props
 }: ButtonPrimitive.Props & VariantProps<typeof buttonVariants>) {
+  // Base UI warns (and drops native button semantics) when `nativeButton`
+  // stays true while `render` swaps in a non-button element — which is what
+  // every "Launch app"/"Register" link here does. Infer it from the rendered
+  // element instead of repeating the prop at each call site.
+  const rendersNativeButton =
+    render === undefined ||
+    (isValidElement(render) && render.type === "button");
+
   return (
     <ButtonPrimitive
       data-slot="button"
       className={cn(buttonVariants({ variant, size, className }))}
+      nativeButton={nativeButton ?? rendersNativeButton}
+      render={render}
       {...props}
     />
   );

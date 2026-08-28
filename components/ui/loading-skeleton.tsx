@@ -49,3 +49,22 @@ export function GeneratorSkeleton() {
     </div>
   );
 }
+
+export function PricingSkeleton() {
+  return (
+    <div
+      className="grid w-full max-w-4xl grid-cols-2 gap-3 md:grid-cols-3"
+      aria-hidden="true"
+    >
+      {[0, 1, 2, 3, 4, 5].map((i) => (
+        <div
+          key={i}
+          className="glass-panel flex flex-col items-center gap-2 rounded-2xl px-4 py-6"
+        >
+          <Skeleton className="h-8 w-20" />
+          <Skeleton className="h-3 w-24" />
+        </div>
+      ))}
+    </div>
+  );
+}

@@ -13,6 +13,7 @@ const NAV_LINKS = [
   { href: "#features", label: "Features" },
   { href: "#recent", label: "Recent" },
   { href: "#generator", label: "Generator" },
+  { href: "#pricing", label: "Pricing" },
   { href: "#faq", label: "FAQ" },
   { href: "#sdk", label: "SDK" },
 ];

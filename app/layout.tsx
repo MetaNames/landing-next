@@ -6,6 +6,7 @@ import "./globals.css";
 
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
+import { TestnetBanner } from "@/components/testnet-banner";
 
 import { config } from "@/lib/config";
 
@@ -106,6 +107,7 @@ export default function RootLayout({
           Skip to main content
         </a>
         <Providers>
+          <TestnetBanner />
           <Header />
           <main id="main-content" className="flex-1 flex flex-col">
             {children}

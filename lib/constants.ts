@@ -57,6 +57,7 @@ export const ROUTES = {
 export const API = {
   STATS: "/api/stats",
   DOMAIN_CHECK: "/api/domains/check",
+  REGISTRATION_FEES: "/api/register/fees",
 } as const;
 
 // Hero domain search
@@ -65,6 +66,25 @@ export const SEARCH = {
   STALE_TIME_MS: 30_000,
   /** Press this key anywhere on the page to focus the search field. */
   FOCUS_KEY: "/",
+} as const;
+
+// Live pricing panel
+export const PRICING = {
+  STALE_TIME_MS: 3_600_000,
+  /**
+   * One sample name per length the mint contract prices differently (verified
+   * against the fee endpoint: 1→2→3→4→5 characters each drop, 6 and above are
+   * flat). Prices are read live, so a contract change shows up here without a
+   * code change; only the tier boundaries are hardcoded.
+   */
+  TIERS: [
+    { label: "1 character", sample: "a" },
+    { label: "2 characters", sample: "ab" },
+    { label: "3 characters", sample: "abc" },
+    { label: "4 characters", sample: "abcd" },
+    { label: "5 characters", sample: "abcde" },
+    { label: "6+ characters", sample: "abcdef" },
+  ],
 } as const;
 
 // External links

@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import routes from "@/constants/routes";
 import { useDomainCheck } from "@/hooks/useDomainCheck";
+import { useRegistrationFee } from "@/hooks/useRegistrationFee";
 import { MAX_LABEL_LENGTH, stripTld } from "@/lib/domain-validator";
 import { SEARCH } from "@/lib/constants";
 
@@ -30,6 +31,8 @@ export function DomainSearch() {
   const [value, setValue] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
   const { status, name, fullName, error } = useDomainCheck(value);
+  // Only quote a price for a name someone can actually mint.
+  const { data: fee } = useRegistrationFee(name, status === "available");
 
   // "/" focuses the field from anywhere, unless the visitor is already typing
   // into some other control.
@@ -141,7 +144,10 @@ export function DomainSearch() {
         {status === "available" && (
           <span className="inline-flex items-center gap-1.5">
             <Check className="h-3.5 w-3.5" aria-hidden="true" />
-            <strong className="font-mono">{fullName}</strong> is available.
+            <strong className="font-mono">{fullName}</strong> is available
+            {fee
+              ? ` for ${fee.feesLabel} ${fee.symbol.split("_").at(-1)}.`
+              : "."}
           </span>
         )}
         {status === "taken" && (
@@ -154,7 +160,7 @@ export function DomainSearch() {
             >
               view it
             </a>
-            .
+            {"."}
           </span>
         )}
         {status === "invalid" && (
