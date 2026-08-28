@@ -1,12 +1,14 @@
+import { config } from "@/lib/config";
+
 const routes = {
   app: {
-    path: process.env.NEXT_PUBLIC_APP_URL! ?? "",
+    path: config.appUrl,
   },
   domains: {
-    path: `${process.env.NEXT_PUBLIC_APP_URL! ?? ""}/domain`,
+    path: `${config.appUrl}/domain`,
   },
   register: {
-    path: `${process.env.NEXT_PUBLIC_APP_URL! ?? ""}/register`,
+    path: `${config.appUrl}/register`,
   },
 };
 

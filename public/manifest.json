@@ -4,8 +4,8 @@
   "description": "DNS for Partisia Blockchain - Your web3 identity solution",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#6849fe",
-  "theme_color": "#6849fe",
+  "background_color": "#06060a",
+  "theme_color": "#06060a",
   "icons": [
     {
       "src": "/icon-192.png",

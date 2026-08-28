@@ -1,17 +1,24 @@
-import { Analytics } from "@vercel/analytics/react";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata, Viewport } from "next";
-import { Plus_Jakarta_Sans } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
-import { Footer } from "@/components/Footer";
-import { Header } from "@/components/Header";
-import { cn } from "@/lib/utils";
+import { Footer } from "@/components/footer";
+import { Header } from "@/components/header";
+
+import { config } from "@/lib/config";
 
 import Providers from "./providers";
 
-const font = Plus_Jakarta_Sans({
+const geistSans = Geist({
   subsets: ["latin"],
   variable: "--font-sans",
+});
+
+const geistMono = Geist_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
 });
 
 export const metadata: Metadata = {
@@ -34,7 +41,7 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "MetaNames Team" }],
   creator: "MetaNames",
-  metadataBase: new URL("https://metanames.app"),
+  metadataBase: new URL(config.siteUrl),
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
@@ -43,7 +50,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://metanames.app",
+    url: config.siteUrl,
     siteName: "MetaNames",
     title: "MetaNames | DNS for Partisia Blockchain",
     description:
@@ -79,8 +86,8 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  // themeColor: "var(--primary)",
-  themeColor: "#6849fe",
+  colorScheme: "dark",
+  themeColor: "#06060a",
 };
 
 export default function RootLayout({
@@ -89,24 +96,33 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`dark ${geistSans.variable} ${geistMono.variable}`}
+      style={{ colorScheme: "dark" }}
+      suppressHydrationWarning
+    >
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="manifest" href="/manifest.json" />
       </head>
-      <body
-        className={cn(
-          "min-h-screen bg-background font-sans antialiased",
-          font.variable
-        )}
-      >
+      <body className="min-h-screen flex flex-col bg-background font-sans antialiased">
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground focus:rounded-md"
+        >
+          Skip to main content
+        </a>
         <Providers>
           <Header />
-          {children}
+          <main id="main-content" className="flex-1 flex flex-col">
+            {children}
+          </main>
           <Footer />
-          <Analytics />
         </Providers>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

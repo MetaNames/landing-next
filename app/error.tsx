@@ -1,8 +1,11 @@
 "use client";
 
+import { useEffect } from "react";
 import Link from "next/link";
-import { Button } from "@/components/Button";
-import { FaHome, FaArrowLeft } from "react-icons/fa";
+import * as Sentry from "@sentry/nextjs";
+import { Home, RotateCw } from "lucide-react";
+
+import { Button } from "@/components/ui/button";
 
 export default function Error({
   error,
@@ -11,35 +14,39 @@ export default function Error({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
+  useEffect(() => {
+    Sentry.captureException(error);
+  }, [error]);
+
   return (
-    <div className="min-h-screen bg-primary flex items-center justify-center px-4">
-      <div className="text-center max-w-md">
-        <h1 className="text-6xl font-bold text-white mb-4">Oops!</h1>
-        <p className="text-white/70 text-lg mb-8">
-          Something went wrong. We're working on fixing it.
+    <div className="spotlight-beam flex flex-1 items-center justify-center px-4 py-24">
+      <div className="relative z-10 max-w-md text-center flex flex-col items-center gap-4 animate-fade-up">
+        <h1 className="font-heading text-4xl sm:text-5xl font-extrabold tracking-tight">
+          Something went wrong
+        </h1>
+        <p className="text-muted-foreground">
+          We hit an unexpected error. Try again, or head back home.
         </p>
-        
         {error?.digest && (
-          <p className="text-white/40 text-sm mb-8">
+          <p className="font-mono text-xs text-muted-foreground">
             Error ID: {error.digest}
           </p>
         )}
-        
-        <div className="flex gap-4 justify-center">
-          <Button
-            onClick={reset}
-            variant="primary"
-          >
-            Try Again
+        <div className="flex flex-wrap gap-3 justify-center mt-2">
+          <Button size="lg" onClick={reset}>
+            <RotateCw data-icon="inline-start" />
+            Try again
           </Button>
-          <Link href="/">
-            <Button
-              variant="secondary"
-              icon={<FaHome />}
-            >
-              Home
-            </Button>
-          </Link>
+          <Button
+            size="lg"
+            variant="outline"
+            render={
+              <Link href="/">
+                <Home data-icon="inline-start" />
+                Home
+              </Link>
+            }
+          />
         </div>
       </div>
     </div>

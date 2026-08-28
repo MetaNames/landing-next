@@ -1,372 +1,168 @@
 "use client";
 
-import { useRef, lazy, Suspense } from "react";
-import Link from "next/link";
-import { motion, useInView } from "framer-motion";
-import { MdOpenInNew } from "react-icons/md";
+import { Suspense, lazy } from "react";
+import { ExternalLink } from "lucide-react";
 
-import { Button } from "@/components/Button";
-import { RecordClasses } from "@/components/RecordClasses";
+import { HowItWorks } from "@/components/how-it-works";
+import { RecordClasses } from "@/components/record-classes";
+import { Section } from "@/components/section";
+import { Button } from "@/components/ui/button";
+import {
+  GeneratorSkeleton,
+  RecentDomainsSkeleton,
+  StatsSkeleton,
+} from "@/components/ui/loading-skeleton";
 import routes from "@/constants/routes";
-import { StatsSkeleton } from "@/components/ui/LoadingSkeleton";
+import { EXTERNAL_LINKS } from "@/lib/constants";
 
-// Lazy load heavy components
-const NamesGenerator = lazy(() => import("@/components/NamesGenerator").then(mod => ({ default: mod.NamesGenerator })));
-const RecentDomains = lazy(() => import("@/components/RecentDomains").then(mod => ({ default: mod.RecentDomains })));
-const Section = lazy(() => import("@/components/Section").then(mod => ({ default: mod.Section })));
-const Stats = lazy(() => import("@/components/Stats").then(mod => ({ default: mod.Stats })));
-
-const NamesGeneratorFallback = () => (
-  <div className="w-full max-w-2xl mx-auto h-64 flex items-center justify-center">
-    <div className="animate-pulse text-white/40">Loading...</div>
-  </div>
+// Below-the-fold panels are client-fetched; keeping them out of the first
+// bundle shortens the hero's time to interactive.
+const NamesGenerator = lazy(() =>
+  import("@/components/names-generator").then((m) => ({
+    default: m.NamesGenerator,
+  })),
 );
-
-const RecentDomainsFallback = () => (
-  <div className="w-full overflow-hidden h-32">
-    <div className="animate-pulse bg-white/5 h-full w-[200%] rounded-2xl" />
-  </div>
+const RecentDomains = lazy(() =>
+  import("@/components/recent-domains").then((m) => ({
+    default: m.RecentDomains,
+  })),
 );
-
-// Skip link component for accessibility
-const SkipLink = () => (
-  <a
-    href="#main-content"
-    className="skip-link"
-  >
-    Skip to main content
-  </a>
+const Stats = lazy(() =>
+  import("@/components/stats").then((m) => ({ default: m.Stats })),
 );
-
-// Animated heading component
-const AnimatedHeading = ({ 
-  children, 
-  className,
-  delay = 0 
-}: { 
-  children: React.ReactNode; 
-  className?: string;
-  delay?: number;
-}) => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-
-  return (
-    <motion.h2
-      ref={ref}
-      className={className}
-      initial={{ opacity: 0, y: 30 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-      transition={{ duration: 0.6, delay, ease: "easeOut" }}
-    >
-      {children}
-    </motion.h2>
-  );
-};
-
-// Animated paragraph
-const AnimatedText = ({ 
-  children, 
-  className,
-  delay = 0 
-}: { 
-  children: React.ReactNode; 
-  className?: string;
-  delay?: number;
-}) => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-50px" });
-
-  return (
-    <motion.p
-      ref={ref}
-      className={className}
-      initial={{ opacity: 0, y: 20 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-      transition={{ duration: 0.5, delay, ease: "easeOut" }}
-    >
-      {children}
-    </motion.p>
-  );
-};
 
 export default function Home() {
-  const heroRef = useRef(null);
-  const heroInView = useInView(heroRef, { once: true });
-
   return (
     <>
-      <SkipLink />
-      <main id="main-content" className="min-h-screen">
-        {/* Hero Section */}
-        <section 
-          ref={heroRef}
-          className="relative min-h-[500px] md:min-h-[600px] flex flex-col items-center justify-center overflow-hidden"
-          aria-labelledby="hero-title"
-        >
-          {/* Animated background gradient */}
-          <div 
-            className="absolute inset-0 bg-gradient-to-br from-primary via-purple-700 to-indigo-900 animate-gradient"
-            style={{
-              backgroundSize: "200% 200%",
-            }}
-          />
-          
-          {/* Mesh gradient overlay */}
-          <div 
-            className="absolute inset-0 opacity-30"
-            style={{
-              backgroundImage: `
-                radial-gradient(circle at 20% 80%, rgba(120, 0, 255, 0.4) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(0, 200, 255, 0.3) 0%, transparent 50%),
-                radial-gradient(circle at 40% 40%, rgba(255, 0, 200, 0.2) 0%, transparent 40%)
-              `,
-            }}
-          />
-          
-          {/* Floating shapes for visual interest */}
-          <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-            <motion.div
-              className="absolute top-20 left-10 w-32 h-32 bg-purple-400/20 rounded-full blur-xl"
-              animate={{ 
-                x: [0, 30, 0],
-                y: [0, -20, 0],
-              }}
-              transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-            />
-            <motion.div
-              className="absolute bottom-20 right-10 w-48 h-48 bg-indigo-400/10 rounded-full blur-2xl"
-              animate={{ 
-                x: [0, -30, 0],
-                y: [0, 30, 0],
-              }}
-              transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-            />
-            <motion.div
-              className="absolute top-1/2 right-1/4 w-24 h-24 bg-purple-400/20 rounded-full blur-lg"
-              animate={{ 
-                scale: [1, 1.2, 1],
-              }}
-              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-            />
-            {/* Additional floating shapes */}
-            <motion.div
-              className="absolute top-1/3 left-1/4 w-16 h-16 bg-pink-400/15 rounded-full blur-md"
-              animate={{ 
-                x: [0, 20, 0],
-                y: [0, 15, 0],
-                rotate: [0, 180, 360],
-              }}
-              transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-            />
-            <motion.div
-              className="absolute bottom-1/3 right-1/3 w-20 h-20 bg-cyan-400/10 rounded-full blur-lg"
-              animate={{ 
-                scale: [1, 1.3, 1],
-                x: [0, -15, 0],
-              }}
-              transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-            />
-            {/* Grid pattern overlay */}
-            <div 
-              className="absolute inset-0 opacity-5"
-              style={{
-                backgroundImage: `
-                  linear-gradient(white 1px, transparent 1px),
-                  linear-gradient(90deg, white 1px, transparent 1px)
-                `,
-                backgroundSize: '60px 60px'
-              }}
-            />
-          </div>
-
-          <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
-            <motion.h1
-              id="hero-title"
-              className="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-4 tracking-tight"
-              initial={{ opacity: 0, y: 40 }}
-              animate={heroInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-            >
-              META NAMES
-            </motion.h1>
-            
-            <motion.p
-              className="text-sm md:text-base text-white/80 mb-8"
-              initial={{ opacity: 0 }}
-              animate={heroInView ? { opacity: 1 } : { opacity: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-            >
-              Powered by{" "}
-              <Link
-                className="font-semibold text-white hover:text-white/80 underline underline-offset-4 transition-colors"
-                href="https://partisiablockchain.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Partisia Blockchain
-              </Link>
-            </motion.p>
-
-            <motion.div
-              className="text-xl md:text-2xl lg:text-3xl font-light text-white/90"
-              initial={{ opacity: 0, y: 20 }}
-              animate={heroInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              transition={{ duration: 0.6, delay: 0.5 }}
-            >
-              Your <RecordClasses /> — on one web3 name
-            </motion.div>
-
-            <motion.div
-              className="mt-8"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={heroInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
-              transition={{ duration: 0.5, delay: 0.7 }}
-            >
-              <Button
-                href={routes.app.path}
-                variant="secondary"
-                size="lg"
-                icon={<MdOpenInNew />}
-              >
-                Launch App
-              </Button>
-            </motion.div>
-          </div>
-
-          {/* Scroll indicator */}
-          <motion.div
-            className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/60"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.2 }}
-            aria-hidden="true"
+      {/* Hero */}
+      <section
+        className="spotlight-beam flex flex-col items-center gap-8 py-16 sm:py-24 w-full"
+        aria-labelledby="hero-title"
+      >
+        <div className="relative z-10 flex flex-col items-center gap-4 text-center max-w-3xl mx-auto px-4 animate-fade-up">
+          <a
+            href={EXTERNAL_LINKS.PARTISIA}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="focus-ring glass-panel rounded-full px-3 py-1 text-[11px] font-medium tracking-[0.18em] uppercase text-muted-foreground hover:text-foreground transition-colors"
           >
-            <motion.div
-              animate={{ y: [0, 8, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
-              className="flex flex-col items-center"
-            >
-              <svg 
-                className="w-6 h-6" 
-                fill="none" 
-                stroke="currentColor" 
-                viewBox="0 0 24 24"
-              >
-                <path 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round" 
-                  strokeWidth={2} 
-                  d="M19 14l-7 7m0 0l-7-7m7 7V3" 
-                />
-              </svg>
-            </motion.div>
-          </motion.div>
-        </section>
-
-        {/* Stats Section */}
-        <Section variant="secondary" id="features" delay={0.1}>
-          <AnimatedHeading className="text-4xl md:text-5xl font-medium mb-8 tracking-wide uppercase" delay={0}>
-            One name. All you need.
-          </AnimatedHeading>
-          
-          <AnimatedText className="max-w-3xl mx-auto" delay={0.1}>
-            Your digital identity, simplified. One <b>Meta Name</b> to rule your web3 life — no more copying and pasting long wallet addresses.
-          </AnimatedText>
-
-          <AnimatedText className="max-w-3xl mx-auto" delay={0.2}>
-            Store wallets, socials, websites, bios, avatars — everything that makes you, you. All behind one sleek .mpc domain.
-          </AnimatedText>
-
-          <AnimatedText className="max-w-3xl mx-auto" delay={0.3}>
-            Built on <b>Partisia Blockchain</b> — fast, private, and built for real-world use. No gas wars. No stress.
-          </AnimatedText>
-
-          <div className="mt-8">
-            <Suspense fallback={<StatsSkeleton />}>
-              <Stats />
-            </Suspense>
-          </div>
-        </Section>
-
-        {/* Recent Domains Section */}
-        <Suspense fallback={<RecentDomainsFallback />}>
-          <Section 
-            variant="primary" 
-            id="recent" 
-            contentClassName="px-0 md:px-0 max-w-full"
-            delay={0.2}
+            Powered by Partisia Blockchain
+          </a>
+          <h1
+            id="hero-title"
+            className="font-heading text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-balance leading-[1.05]"
           >
-            <AnimatedHeading className="text-4xl md:text-5xl font-medium mb-4 tracking-wide uppercase" delay={0}>
-              Fresh domains
-            </AnimatedHeading>
-            <AnimatedText className="mb-8" delay={0.1}>
-              See what's trending. Names are going fast.
-            </AnimatedText>
-            <RecentDomains />
-          </Section>
-        </Suspense>
+            Own your name on the{" "}
+            <span className="text-primary-glow text-glow">Partisia</span>{" "}
+            Blockchain
+          </h1>
+          <p className="text-base sm:text-lg text-muted-foreground text-balance">
+            Your <RecordClasses /> — on one web3 name
+          </p>
+          <div className="mt-2">
+            <Button
+              size="lg"
+              render={
+                <a href={routes.app.path}>
+                  Launch App
+                  <ExternalLink data-icon="inline-end" />
+                </a>
+              }
+            />
+          </div>
+        </div>
 
-        {/* Name Generator Section */}
-        <Suspense fallback={<NamesGeneratorFallback />}>
-          <Section variant="secondary" id="generator" delay={0.3}>
-            <AnimatedHeading className="text-4xl md:text-5xl font-medium mb-4 tracking-wide uppercase" delay={0}>
-              Find yours
-            </AnimatedHeading>
-            <AnimatedText className="mb-4" delay={0.1}>
-              Can't decide? Let's spark some inspiration.
-            </AnimatedText>
-            <NamesGenerator />
-          </Section>
-        </Suspense>
+        <div className="relative z-10 w-full px-4">
+          <HowItWorks />
+        </div>
+      </section>
 
-        {/* SDK Section */}
-        <Suspense fallback={<div className="h-64" />}>
-          <Section variant="primary" id="sdk" delay={0.4}>
-          <AnimatedHeading className="text-4xl md:text-5xl font-medium mb-8 tracking-wide uppercase" delay={0}>
-            Build with us
-          </AnimatedHeading>
-          
-          <AnimatedText className="max-w-3xl mx-auto" delay={0.1}>
+      {/* Features + stats */}
+      <Section
+        id="features"
+        variant="muted"
+        eyebrow="One name. All you need."
+        title="Your digital identity, simplified"
+      >
+        <div className="max-w-3xl mx-auto flex flex-col gap-4 text-muted-foreground text-balance">
+          <p>
+            One <strong className="text-foreground">Meta Name</strong> to rule
+            your web3 life — no more copying and pasting long wallet addresses.
+          </p>
+          <p>
+            Store wallets, socials, websites, bios, avatars — everything that
+            makes you, you. All behind one sleek .mpc domain.
+          </p>
+          <p>
+            Built on{" "}
+            <strong className="text-foreground">Partisia Blockchain</strong> —
+            fast, private, and built for real-world use. No gas wars. No stress.
+          </p>
+        </div>
+
+        <Suspense fallback={<StatsSkeleton />}>
+          <Stats />
+        </Suspense>
+      </Section>
+
+      {/* Recent domains */}
+      <Section id="recent" title="Fresh domains" contentClassName="px-0">
+        <p className="text-muted-foreground px-4">
+          See what&apos;s trending. Names are going fast.
+        </p>
+        <Suspense fallback={<RecentDomainsSkeleton />}>
+          <RecentDomains />
+        </Suspense>
+      </Section>
+
+      {/* Generator */}
+      <Section id="generator" variant="muted" title="Find yours">
+        <p className="text-muted-foreground">
+          Can&apos;t decide? Let&apos;s spark some inspiration.
+        </p>
+        <Suspense fallback={<GeneratorSkeleton />}>
+          <NamesGenerator />
+        </Suspense>
+      </Section>
+
+      {/* SDK */}
+      <Section id="sdk" title="Build with us">
+        <div className="max-w-3xl mx-auto flex flex-col gap-4 text-muted-foreground text-balance">
+          <p>
             Plug into the Meta Names SDK. Simple APIs, powerful possibilities.
-          </AnimatedText>
-          
-          <AnimatedText className="max-w-3xl mx-auto" delay={0.2}>
-            Register domains, embed data, manage subdomains — all programmatically. 
-            Built for devs who ship.
-          </AnimatedText>
-          
-          <AnimatedText className="max-w-3xl mx-auto" delay={0.3}>
-            Docs → Community → Ship. {" "}
-            <Link
-              href="https://t.me/mpc_metanames"
+          </p>
+          <p>
+            Register domains, embed data, manage subdomains — all
+            programmatically. Built for devs who ship.
+          </p>
+          <p>
+            Docs, community, ship.{" "}
+            <a
+              href={EXTERNAL_LINKS.TELEGRAM}
               target="_blank"
               rel="noopener noreferrer"
-              className="underline font-medium px-1 hover:text-primary-foreground transition-colors"
+              className="focus-ring underline underline-offset-4"
             >
               Join the builders
-            </Link>.
-          </AnimatedText>
-
-          <motion.div
-            className="mt-8"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.5 }}
-          >
-            <Button
-              icon={<MdOpenInNew />}
-              variant="secondary"
-              href={"https://docs.metanames.app"}
-              size="lg"
+            </a>
+            .
+          </p>
+        </div>
+        <Button
+          size="lg"
+          variant="outline"
+          render={
+            <a
+              href={EXTERNAL_LINKS.DOCS}
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              Learn More
-            </Button>
-          </motion.div>
-        </Section>
-        </Suspense>
-      </main>
+              Read the docs
+              <ExternalLink data-icon="inline-end" />
+            </a>
+          }
+        />
+      </Section>
     </>
   );
 }

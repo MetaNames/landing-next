@@ -34,17 +34,16 @@ export const SPACING = {
 
 // Class name constants
 export const CLASSES = {
-  FOCUS_VISIBLE: "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
-  TRANSPARENT_BORDER: "border border-white/10",
-  GLASS_BG: "bg-white/5 backdrop-blur-sm",
-  HOVER_LIFT: "hover:scale-[1.02] active:scale-[0.98] transition-all duration-200",
+  FOCUS_VISIBLE: "focus-ring",
+  GLASS_PANEL: "glass-panel",
+  HOVER_BORDER: "transition-colors hover:border-primary/40",
   TOUCH_MANIPULATION: "touch-manipulation",
 } as const;
 
 // Domain configuration
 export const DOMAIN_CONFIG = {
   TLD: ".mpc",
-  CARD_WIDTH: "w-[26rem]",
+  CARD_WIDTH: "w-[20rem]",
 } as const;
 
 // Route paths

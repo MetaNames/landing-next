@@ -15,24 +15,24 @@ const STALE_TIME = 30_000; // 30 seconds
 const REFETCH_INTERVAL = 60_000; // 60 seconds
 
 export const useStats = () => {
-  const { 
-    data: stats, 
+  const {
+    data: stats,
     isLoading,
     isError,
     error,
     refetch,
-    isFetching 
+    isFetching,
   } = useQuery<Stats>({
     queryKey: ["stats"],
     queryFn: async () => {
       const response = await fetch("/api/stats", {
         next: { revalidate: 60 },
       });
-      
+
       if (!response.ok) {
         throw new Error(`Failed to fetch stats: ${response.statusText}`);
       }
-      
+
       return response.json();
     },
     placeholderData: keepPreviousData,
@@ -42,8 +42,8 @@ export const useStats = () => {
     retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 10000),
   });
 
-  return { 
-    stats, 
+  return {
+    stats,
     isLoading,
     isError,
     error,

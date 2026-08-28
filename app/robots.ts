@@ -1,5 +1,7 @@
 import { MetadataRoute } from "next";
 
+import { config } from "@/lib/config";
+
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: {
@@ -7,6 +9,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: ["/api/", "/admin/"],
     },
-    sitemap: "https://metanames.app/sitemap.xml",
+    sitemap: `${config.siteUrl}/sitemap.xml`,
   };
 }
