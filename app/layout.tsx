@@ -55,21 +55,12 @@ export const metadata: Metadata = {
     title: "MetaNames | DNS for Partisia Blockchain",
     description:
       "Cutting-edge DNS solution on Partisia Blockchain. Simplify Web3 domain management with our developer-friendly SDK.",
-    images: [
-      {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "MetaNames - DNS for Partisia Blockchain",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "MetaNames | DNS for Partisia Blockchain",
     description:
       "Cutting-edge DNS solution on Partisia Blockchain. Simplify Web3 domain management.",
-    images: ["/og-image.png"],
     creator: "@metanames",
   },
   robots: {

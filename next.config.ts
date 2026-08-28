@@ -24,7 +24,6 @@ const sentryConfig = {
   // Routes browser requests to Sentry through a Next.js rewrite to sidestep ad-blockers.
   tunnelRoute: "/monitoring",
   hideSourceMaps: true,
-  disableLogger: true,
 };
 
 export default withSentryConfig(nextConfig, sentryConfig);

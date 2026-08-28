@@ -3,9 +3,12 @@
 import { Suspense, lazy } from "react";
 import { ExternalLink } from "lucide-react";
 
+import { DomainSearch } from "@/components/domain-search";
+import { Faq } from "@/components/faq";
 import { HowItWorks } from "@/components/how-it-works";
 import { RecordClasses } from "@/components/record-classes";
 import { Section } from "@/components/section";
+import { StructuredData } from "@/components/structured-data";
 import { Button } from "@/components/ui/button";
 import {
   GeneratorSkeleton,
@@ -34,6 +37,7 @@ const Stats = lazy(() =>
 export default function Home() {
   return (
     <>
+      <StructuredData />
       {/* Hero */}
       <section
         className="spotlight-beam flex flex-col items-center gap-8 py-16 sm:py-24 w-full"
@@ -59,17 +63,20 @@ export default function Home() {
           <p className="text-base sm:text-lg text-muted-foreground text-balance">
             Your <RecordClasses /> — on one web3 name
           </p>
-          <div className="mt-2">
-            <Button
-              size="lg"
-              render={
-                <a href={routes.app.path}>
-                  Launch App
-                  <ExternalLink data-icon="inline-end" />
-                </a>
-              }
-            />
+          <div className="mt-4 w-full">
+            <DomainSearch />
           </div>
+          <Button
+            size="lg"
+            variant="ghost"
+            className="text-muted-foreground"
+            render={
+              <a href={routes.app.path}>
+                Or launch the app
+                <ExternalLink data-icon="inline-end" />
+              </a>
+            }
+          />
         </div>
 
         <div className="relative z-10 w-full px-4">
@@ -123,6 +130,11 @@ export default function Home() {
         <Suspense fallback={<GeneratorSkeleton />}>
           <NamesGenerator />
         </Suspense>
+      </Section>
+
+      {/* FAQ */}
+      <Section id="faq" variant="muted" title="Questions, answered">
+        <Faq />
       </Section>
 
       {/* SDK */}

@@ -56,6 +56,15 @@ export const ROUTES = {
 // API endpoints
 export const API = {
   STATS: "/api/stats",
+  DOMAIN_CHECK: "/api/domains/check",
+} as const;
+
+// Hero domain search
+export const SEARCH = {
+  DEBOUNCE_MS: 350,
+  STALE_TIME_MS: 30_000,
+  /** Press this key anywhere on the page to focus the search field. */
+  FOCUS_KEY: "/",
 } as const;
 
 // External links

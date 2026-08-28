@@ -1,10 +1,12 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { Check, ExternalLink, RefreshCw } from "lucide-react";
+import { Check, Copy, ExternalLink, Loader2, RefreshCw, X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import routes from "@/constants/routes";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
+import { useDomainCheck, type DomainCheckStatus } from "@/hooks/useDomainCheck";
 import {
   CATEGORY_LABELS,
   Category,
@@ -22,6 +24,10 @@ export function NamesGenerator() {
   const [generatedName, setGeneratedName] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<Category>("all");
   const [wordCount, setWordCount] = useState<WordCount>(2);
+  const { copied, copy } = useCopyToClipboard();
+  // The name is generated locally, so there is nothing to debounce — check it
+  // as soon as it changes.
+  const { status } = useDomainCheck(generatedName ?? "", { immediate: true });
 
   const generateName = useCallback(() => {
     setGeneratedName(generateMetaName(selectedCategory, wordCount));
@@ -98,12 +104,29 @@ export function NamesGenerator() {
         >
           {generatedName}
         </span>
+
+        <div className="mt-4 flex items-center justify-center gap-3 text-sm">
+          <AvailabilityTag status={status} />
+          <button
+            type="button"
+            onClick={() => generatedName && copy(generatedName)}
+            className="focus-ring inline-flex items-center gap-1.5 rounded-full px-2 py-1 text-muted-foreground transition-colors hover:text-foreground"
+            aria-label={`Copy ${generatedName ?? "name"}`}
+          >
+            {copied ? (
+              <Check className="h-3.5 w-3.5" aria-hidden="true" />
+            ) : (
+              <Copy className="h-3.5 w-3.5" aria-hidden="true" />
+            )}
+            {copied ? "Copied" : "Copy"}
+          </button>
+        </div>
       </div>
 
       <div className="flex flex-wrap gap-3 justify-center">
         <Button
           size="lg"
-          disabled={!generatedName}
+          disabled={!generatedName || status === "taken"}
           render={
             <a
               href={`${routes.register.path}/${(generatedName ?? "").replace(".mpc", "")}`}
@@ -120,4 +143,38 @@ export function NamesGenerator() {
       </div>
     </div>
   );
+}
+
+function AvailabilityTag({ status }: { status: DomainCheckStatus }) {
+  if (status === "checking" || status === "idle") {
+    return (
+      <span
+        className="inline-flex items-center gap-1.5 text-muted-foreground"
+        role="status"
+      >
+        <Loader2 className="h-3.5 w-3.5 animate-spin" aria-hidden="true" />
+        Checking availability
+      </span>
+    );
+  }
+
+  if (status === "taken") {
+    return (
+      <span className="inline-flex items-center gap-1.5 text-destructive">
+        <X className="h-3.5 w-3.5" aria-hidden="true" />
+        Already taken
+      </span>
+    );
+  }
+
+  if (status === "available") {
+    return (
+      <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--chip-registered-bg)] px-2.5 py-0.5 text-[var(--chip-registered-fg)]">
+        <Check className="h-3.5 w-3.5" aria-hidden="true" />
+        Available
+      </span>
+    );
+  }
+
+  return null;
 }

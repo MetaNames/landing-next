@@ -2,6 +2,9 @@
 
 import Image from "next/image";
 import CountUp from "react-countup";
+import { AlertCircle, RefreshCw } from "lucide-react";
+
+import { Button } from "@/components/ui/button";
 
 import partisiaImage from "@/public/assets/images/partisia-logo.png";
 import { useStats } from "@/hooks/useStats";
@@ -21,7 +24,33 @@ function StatValue({ value }: { value: number }) {
 }
 
 export function Stats() {
-  const { stats } = useStats();
+  const { stats, isError, isFetching, refetch } = useStats();
+
+  if (isError && !stats) {
+    return (
+      <div
+        className="glass-panel mx-auto flex w-full max-w-3xl flex-col items-center gap-3 rounded-2xl p-6 text-center"
+        role="alert"
+      >
+        <AlertCircle className="h-5 w-5 text-muted-foreground" aria-hidden />
+        <p className="text-sm text-muted-foreground">
+          Live numbers are unavailable right now.
+        </p>
+        <Button
+          variant="outline"
+          size="lg"
+          onClick={() => refetch()}
+          disabled={isFetching}
+        >
+          <RefreshCw
+            data-icon="inline-start"
+            className={isFetching ? "animate-spin" : undefined}
+          />
+          Try again
+        </Button>
+      </div>
+    );
+  }
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-3xl mx-auto">

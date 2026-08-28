@@ -86,6 +86,10 @@
     @apply font-sans;
     scroll-behavior: smooth;
   }
+  /* Anchor jumps land below the sticky header rather than under it. */
+  section[id] {
+    scroll-margin-top: 5rem;
+  }
   body {
     @apply bg-background text-foreground;
     font-feature-settings:
