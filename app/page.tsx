@@ -145,8 +145,8 @@ export default function Home() {
         eyebrow="Live from the contract"
       >
         <p className="text-muted-foreground text-balance">
-          One payment, no renewal. Shorter names cost more — the numbers below
-          are read straight from the registration contract.
+          Priced per year, and shorter names cost more. The numbers below are
+          read straight from the registration contract.
         </p>
         <Suspense fallback={<PricingSkeleton />}>
           <Pricing />

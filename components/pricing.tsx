@@ -24,7 +24,7 @@ function TierPrice({ sample }: { sample: string }) {
     <span className="font-heading text-3xl font-extrabold text-primary-glow text-glow">
       {data.feesLabel}
       <span className="ml-1 font-sans text-xs font-medium tracking-[0.18em] uppercase text-muted-foreground">
-        {data.symbol.split("_").at(-1)}
+        {data.symbol.split("_").at(-1)} / yr
       </span>
     </span>
   );

@@ -34,7 +34,7 @@ describe("Pricing", () => {
         await screen.findByText(String(tier.sample.length)),
       ).toBeInTheDocument();
     }
-    expect((await screen.findAllByText("USDC")).length).toBe(
+    expect((await screen.findAllByText("USDC / yr")).length).toBe(
       PRICING.TIERS.length,
     );
   });
