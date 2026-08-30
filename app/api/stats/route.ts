@@ -6,7 +6,7 @@ export const revalidate = 60; // Revalidate every 60 seconds
 export async function GET() {
   try {
     const stats = await getMetaNamesStats();
-    
+
     return Response.json(stats, {
       status: 200,
       headers: {
@@ -16,10 +16,13 @@ export async function GET() {
     });
   } catch (error) {
     console.error("Failed to fetch stats:", error);
-    
+
     return Response.json(
-      { error: "Failed to fetch stats", message: error instanceof Error ? error.message : "Unknown error" },
-      { status: 500 }
+      {
+        error: "Failed to fetch stats",
+        message: error instanceof Error ? error.message : "Unknown error",
+      },
+      { status: 500 },
     );
   }
 }

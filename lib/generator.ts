@@ -39,23 +39,29 @@ const getDictionary = (category: Category): string[] => {
   }
 };
 
-const generateRandomName = (category: Category, wordCount: WordCount): string => {
+const generateRandomName = (
+  category: Category,
+  wordCount: WordCount,
+): string => {
   const dict = getDictionary(category);
-  
+
   // unique-names-generator requires each word to come from a separate dictionary
   // Duplicate the dictionary array for each word count
   const dictionaries = Array(wordCount).fill(dict);
-  
+
   const config = {
     dictionaries,
     separator: "-",
     length: wordCount,
   };
-  
+
   return uniqueNamesGenerator(config).toLocaleLowerCase();
 };
 
-export const generateMetaName = (category: Category = "all", wordCount: WordCount = 2): string => {
+export const generateMetaName = (
+  category: Category = "all",
+  wordCount: WordCount = 2,
+): string => {
   const generatedName = generateRandomName(category, wordCount);
   return `${generatedName}.${MetaNamesConfig.tld}`;
 };

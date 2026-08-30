@@ -1,33 +1,35 @@
-import { LoadingSkeleton, StatsSkeleton } from "@/components/ui/LoadingSkeleton";
+import { Skeleton } from "@/components/ui/skeleton";
+import {
+  RecentDomainsSkeleton,
+  StatsSkeleton,
+} from "@/components/ui/loading-skeleton";
 
 export default function Loading() {
   return (
-    <div className="min-h-screen">
-      {/* Hero skeleton */}
-      <section className="relative min-h-[500px] md:min-h-[600px] flex flex-col items-center justify-center">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary via-purple-700 to-indigo-900" />
-        
-        <div className="relative z-10 text-center px-4 max-w-4xl mx-auto space-y-6">
-          <LoadingSkeleton className="h-16 md:h-24 w-64 md:w-96 mx-auto rounded-lg" />
-          <LoadingSkeleton className="h-6 w-48 mx-auto rounded" />
-          <LoadingSkeleton className="h-10 w-80 mx-auto rounded" />
+    <div className="flex flex-col">
+      {/* Hero */}
+      <section className="spotlight-beam flex flex-col items-center gap-8 py-16 sm:py-24 w-full">
+        <div className="relative z-10 flex flex-col items-center gap-4 w-full max-w-3xl px-4">
+          <Skeleton className="h-6 w-56 rounded-full" />
+          <Skeleton className="h-14 w-full" />
+          <Skeleton className="h-5 w-72" />
+          <Skeleton className="h-9 w-36 rounded-lg" />
         </div>
       </section>
 
-      {/* Stats skeleton */}
-      <section className="bg-secondary py-12 md:py-20 px-4">
-        <div className="max-w-[1280px] mx-auto text-center space-y-8">
-          <LoadingSkeleton className="h-12 w-64 mx-auto rounded" />
+      {/* Stats */}
+      <section className="border-t border-border/60 bg-card/40 py-16 sm:py-20">
+        <div className="container mx-auto px-4 flex flex-col items-center gap-6">
+          <Skeleton className="h-10 w-72" />
           <StatsSkeleton />
         </div>
       </section>
 
-      {/* Recent domains skeleton */}
-      <section className="bg-primary py-12 md:py-20 px-4">
-        <div className="max-w-[1280px] mx-auto text-center space-y-6">
-          <LoadingSkeleton className="h-12 w-48 mx-auto rounded" />
-          <LoadingSkeleton className="h-6 w-64 mx-auto rounded" />
-          <LoadingSkeleton className="h-32 w-full max-w-4xl mx-auto rounded-2xl" />
+      {/* Recent domains */}
+      <section className="border-t border-border/60 py-16 sm:py-20">
+        <div className="container mx-auto flex flex-col items-center gap-6">
+          <Skeleton className="h-10 w-56" />
+          <RecentDomainsSkeleton />
         </div>
       </section>
     </div>

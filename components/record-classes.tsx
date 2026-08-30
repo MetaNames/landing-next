@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState } from "react";
+
 import { ANIMATION } from "@/lib/constants";
 
 const RECORD_TYPES = [
@@ -13,16 +14,14 @@ const RECORD_TYPES = [
 
 type RecordType = (typeof RECORD_TYPES)[number];
 
-const RecordClasses = () => {
+export function RecordClasses() {
   const [index, setIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
-
-  const currentRecord = useMemo(() => RECORD_TYPES[index], [index]);
 
   useEffect(() => {
     const interval = setInterval(() => {
       setIsVisible(false);
-      
+
       setTimeout(() => {
         setIndex((prev) => (prev + 1) % RECORD_TYPES.length);
         setIsVisible(true);
@@ -33,19 +32,16 @@ const RecordClasses = () => {
   }, []);
 
   return (
-    <span
-      className="bg-white/20 backdrop-blur-sm text-white px-4 py-1.5 text-base md:text-lg font-bold rounded-md mx-1 inline-block min-w-[130px] text-center align-middle"
-    >
+    <span className="glass-panel inline-block rounded-lg px-3 py-1 mx-1 min-w-[11rem] text-center align-middle text-primary-glow">
       <span
         className={`transition-opacity duration-300 ${
           isVisible ? "opacity-100" : "opacity-0"
         }`}
       >
-        {currentRecord}
+        {RECORD_TYPES[index]}
       </span>
     </span>
   );
-};
+}
 
-export { RecordClasses };
 export type { RecordType };

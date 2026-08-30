@@ -1,135 +1,197 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-@layer base {
-  :root {
-    --background: 250, 99%, 64%;
-    --foreground: 222.2 84% 4.9%;
+@custom-variant dark (&:is(.dark *));
 
-    --primary: 250, 99%, 64%;
-    --primary-foreground: 210 40% 98%;
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+  --font-heading: var(--font-sans);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-primary-glow: var(--primary-glow);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+  --animate-marquee: marquee var(--duration, 30s) linear infinite;
+}
 
-    --secondary: 0, 1%, 21%;
-    --secondary-foreground: 0, 0%, 100%;
-
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-
-    --radius: 0.5rem;
-  }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --primary: 263 70% 50%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-  }
+:root {
+  --background: hsl(240 22% 3%);
+  --foreground: hsl(240 20% 94%);
+  --card: hsl(240 20% 8%);
+  --card-foreground: hsl(240 20% 94%);
+  --popover: hsl(240 20% 6%);
+  --popover-foreground: hsl(240 20% 94%);
+  --primary: hsl(249 91% 63%);
+  --primary-glow: hsl(249 100% 74%);
+  --primary-foreground: hsl(0 0% 100%);
+  --secondary: hsl(240 14% 12%);
+  --secondary-foreground: hsl(240 20% 94%);
+  --muted: hsl(240 14% 10%);
+  --muted-foreground: hsl(240 11% 60%);
+  --accent: hsl(249 91% 63% / 0.15);
+  --accent-foreground: hsl(248 100% 86%);
+  --destructive: hsl(0 72% 51%);
+  --destructive-foreground: hsl(0 0% 100%);
+  --border: hsl(240 10% 16%);
+  --input: hsl(240 10% 16%);
+  --ring: hsl(249 91% 63%);
+  --chart-1: hsl(249 91% 63%);
+  --chart-2: hsl(249 100% 74%);
+  --chart-3: hsl(240 11% 60%);
+  --chart-4: hsl(240 14% 30%);
+  --chart-5: hsl(240 14% 20%);
+  --radius: 0.75rem;
+  --link: hsl(249 100% 74%);
+  --link-visited: hsl(249 80% 64%);
+  --chip-available-bg: hsl(142 69% 58% / 0.12);
+  --chip-available-fg: hsl(142 69% 58%);
+  --chip-registered-bg: hsl(249 91% 63% / 0.16);
+  --chip-registered-fg: hsl(248 100% 86%);
+  --glow: hsl(249 91% 63% / 0.45);
 }
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-border outline-ring/50;
   }
   html {
+    @apply font-sans;
     scroll-behavior: smooth;
+  }
+  /* Anchor jumps land below the sticky header rather than under it. */
+  section[id] {
+    scroll-margin-top: 5rem;
   }
   body {
     @apply bg-background text-foreground;
-    font-feature-settings: "rlig" 1, "calt" 1;
+    font-feature-settings:
+      "rlig" 1,
+      "calt" 1;
   }
-
-  /* Focus styles for accessibility */
-  :focus-visible {
-    @apply outline-none ring-2 ring-primary ring-offset-2 ring-offset-background;
+  a {
+    color: var(--link);
   }
-
-  /* Skip link for accessibility */
-  .skip-link {
-    @apply absolute -top-10 left-4 z-50 bg-primary text-white px-4 py-2 rounded transition-all;
+  a:visited {
+    color: var(--link-visited);
   }
-  .skip-link:focus {
-    @apply top-4;
+  /*
+   * Default border colour for .glass-panel lives in the `base` layer (which Tailwind
+   * orders before `utilities`) so that any `border-*` colour utility applied alongside
+   * `.glass-panel` always wins the cascade, instead of the outcome depending on source
+   * order within the same layer.
+   */
+  .glass-panel {
+    border-color: hsl(0 0% 100% / 0.1);
   }
 }
 
-/* Animation utilities */
 @layer utilities {
-  .animate-fade-in {
-    animation: fadeIn 0.6s ease-out forwards;
+  .spotlight-beam {
+    position: relative;
   }
-  
-  .animate-slide-up {
-    animation: slideUp 0.6s ease-out forwards;
+  .spotlight-beam::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    /* Never wider than the viewport: the beam is a background flourish and has
+       no business giving the document a horizontal scrollbar on a phone. */
+    width: min(100vw, 960px);
+    height: 480px;
+    background: radial-gradient(
+      50% 60% at 50% 0%,
+      var(--glow) 0%,
+      transparent 72%
+    );
+    pointer-events: none;
+    z-index: 0;
+    animation: beam-pulse 8s ease-in-out infinite;
   }
-
-  .animate-float {
-    animation: float 6s ease-in-out infinite;
+  .glass-panel {
+    background: hsl(0 0% 100% / 0.05);
+    border-width: 1px;
+    border-style: solid;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
   }
-
-  .animate-gradient {
-    background-size: 200% 200%;
-    animation: gradient 8s ease infinite;
+  .text-glow {
+    text-shadow: 0 0 24px var(--glow);
+  }
+  /*
+   * Shared focus-visible ring: a real `outline` (not a box-shadow "ring-*" utility) so it is
+   * measurable against whatever sits behind the element. `--primary-glow` is used instead of
+   * `--primary` because it clears 3:1 against every surface token in this theme.
+   */
+  .focus-ring,
+  header a {
+    outline-style: solid;
+    outline-width: 2px;
+    outline-offset: 2px;
+    outline-color: transparent;
+  }
+  .focus-ring:focus-visible,
+  header a:focus-visible {
+    outline-color: var(--primary-glow);
+  }
+  .animate-fade-up {
+    animation: fade-up 0.5s ease-out both;
   }
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-20px);
-  }
-}
-
-@keyframes gradient {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
+@keyframes beam-pulse {
+  0%,
   100% {
-    background-position: 0% 50%;
+    opacity: 0.85;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
   }
 }
 
-/* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

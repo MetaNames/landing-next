@@ -1,32 +1,24 @@
 import { MetadataRoute } from "next";
 
+import { config } from "@/lib/config";
+
+const SECTIONS = ["features", "recent", "generator", "pricing", "faq", "sdk"];
+
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://metanames.app";
+  const lastModified = new Date();
 
   return [
     {
-      url: baseUrl,
-      lastModified: new Date(),
+      url: config.siteUrl,
+      lastModified,
       changeFrequency: "weekly",
       priority: 1,
     },
-    {
-      url: `${baseUrl}/#features`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/#pricing`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
+    ...SECTIONS.map((section) => ({
+      url: `${config.siteUrl}/#${section}`,
+      lastModified,
+      changeFrequency: "monthly" as const,
       priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/#faq`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.6,
-    },
+    })),
   ];
 }
