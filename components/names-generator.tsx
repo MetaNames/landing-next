@@ -124,18 +124,27 @@ export function NamesGenerator() {
       </div>
 
       <div className="flex flex-wrap gap-3 justify-center">
-        <Button
-          size="lg"
-          disabled={!generatedName || status === "taken"}
-          render={
-            <a
-              href={`${routes.register.path}/${(generatedName ?? "").replace(".mpc", "")}`}
-            >
-              Register now
-              <ExternalLink data-icon="inline-end" />
-            </a>
-          }
-        />
+        {/* A disabled anchor is still an anchor: it keeps its href, stays
+            clickable and ignores the disabled styling. Drop the link entirely
+            while the name is not registrable. */}
+        {generatedName && status !== "taken" ? (
+          <Button
+            size="lg"
+            render={
+              <a
+                href={`${routes.register.path}/${generatedName.replace(".mpc", "")}`}
+              >
+                Register now
+                <ExternalLink data-icon="inline-end" />
+              </a>
+            }
+          />
+        ) : (
+          <Button size="lg" disabled>
+            Register now
+            <ExternalLink data-icon="inline-end" />
+          </Button>
+        )}
         <Button size="lg" variant="outline" onClick={generateName}>
           <RefreshCw data-icon="inline-start" />
           Regenerate

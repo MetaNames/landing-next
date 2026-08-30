@@ -32,14 +32,21 @@ export function RecordClasses() {
   }, []);
 
   return (
-    <span className="glass-panel inline-block rounded-lg px-3 py-1 mx-1 min-w-[11rem] text-center align-middle text-primary-glow">
-      <span
-        className={`transition-opacity duration-300 ${
-          isVisible ? "opacity-100" : "opacity-0"
-        }`}
-      >
-        {RECORD_TYPES[index]}
-      </span>
+    /* Every option is laid over the same grid cell: the slot is as wide as the
+       longest record type from the first frame, so the sentence never reflows
+       mid-rotation and no magic min-width has to be kept in sync with the list. */
+    <span className="inline-grid align-baseline text-primary-glow">
+      {RECORD_TYPES.map((type, i) => (
+        <span
+          key={type}
+          aria-hidden={i === index ? undefined : "true"}
+          className={`col-start-1 row-start-1 whitespace-nowrap transition-opacity duration-300 ${
+            i === index && isVisible ? "opacity-100" : "opacity-0"
+          }`}
+        >
+          {type}
+        </span>
+      ))}
     </span>
   );
 }

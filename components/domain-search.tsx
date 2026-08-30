@@ -34,6 +34,29 @@ export function DomainSearch() {
   // Only quote a price for a name someone can actually mint.
   const { data: fee } = useRegistrationFee(name, status === "available");
 
+  // A checked name is worth sharing, and someone who reloads should not have to
+  // type it again. `history.replaceState` rather than the router: this keeps the
+  // page statically rendered (no useSearchParams bail-out) and leaves the back
+  // button meaning "the page before", not "the last keystroke".
+  useEffect(() => {
+    const seeded = new URLSearchParams(window.location.search).get(
+      SEARCH.QUERY_PARAM,
+    );
+    // Seeding from the URL is a one-shot read of a browser-only source on
+    // mount, which is what the server render deliberately cannot see; the rule
+    // is aimed at effects that mirror props into state on every render.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    if (seeded) setValue(stripTld(seeded.trim().toLowerCase()));
+  }, []);
+
+  useEffect(() => {
+    const url = new URL(window.location.href);
+    if (name) url.searchParams.set(SEARCH.QUERY_PARAM, name);
+    else url.searchParams.delete(SEARCH.QUERY_PARAM);
+    if (url.href !== window.location.href)
+      window.history.replaceState(null, "", url);
+  }, [name]);
+
   // "/" focuses the field from anywhere, unless the visitor is already typing
   // into some other control.
   useEffect(() => {
@@ -109,15 +132,26 @@ export function DomainSearch() {
             <X className="h-4 w-4" />
           </button>
         )}
-        <Button
-          size="lg"
-          type="submit"
-          disabled={status !== "available"}
-          className="shrink-0"
-        >
-          Register
-          <ArrowRight data-icon="inline-end" />
-        </Button>
+        {/* A real link once there is somewhere to go: middle-click, "open in
+            new tab" and copy-link all work, and the browser can prefetch it.
+            The form's submit handler covers the Enter key. */}
+        {status === "available" ? (
+          <Button
+            size="lg"
+            className="shrink-0"
+            render={
+              <a href={registerHref}>
+                Register
+                <ArrowRight data-icon="inline-end" />
+              </a>
+            }
+          />
+        ) : (
+          <Button size="lg" type="submit" disabled className="shrink-0">
+            Register
+            <ArrowRight data-icon="inline-end" />
+          </Button>
+        )}
       </form>
 
       <p

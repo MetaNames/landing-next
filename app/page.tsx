@@ -67,7 +67,7 @@ export default function Home() {
             Blockchain
           </h1>
           <p className="text-base sm:text-lg text-muted-foreground text-balance">
-            Your <RecordClasses /> — on one web3 name
+            One name for your <RecordClasses />
           </p>
           <div className="mt-4 w-full">
             <DomainSearch />

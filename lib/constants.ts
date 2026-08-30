@@ -66,6 +66,7 @@ export const SEARCH = {
   STALE_TIME_MS: 30_000,
   /** Press this key anywhere on the page to focus the search field. */
   FOCUS_KEY: "/",
+  QUERY_PARAM: "q",
 } as const;
 
 // Live pricing panel

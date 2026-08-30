@@ -1,14 +1,17 @@
 import path from "path";
+import react from "@vitejs/plugin-react-swc";
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
+  // SWC rather than the Babel-based React plugin: the Babel one pulls a
+  // Babel 8 peer that conflicts with the Babel 7 shadcn depends on.
+  plugins: [react()],
   test: {
-    // Node only: the suite covers pure logic and route handlers. Component
-    // tests would need @vitejs/plugin-react, whose current release pulls in a
-    // Babel 8 peer that conflicts with shadcn's Babel 7.
-    environment: "node",
+    environment: "jsdom",
     globals: true,
-    include: ["**/*.test.ts"],
+    setupFiles: ["./__tests__/setup.ts"],
+    include: ["**/*.test.ts", "**/*.test.tsx"],
+    exclude: ["node_modules/**", ".next/**"],
   },
   resolve: {
     alias: { "@": path.resolve(__dirname, "./") },
