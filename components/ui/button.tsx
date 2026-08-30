@@ -59,12 +59,18 @@ function Button({
     render === undefined ||
     (isValidElement(render) && render.type === "button");
 
+  // Base UI stamps role="button" on whatever it renders. On an anchor that is
+  // a lie: it goes somewhere, so it should be announced — and matched in
+  // tests — as a link, and it keeps the browser's link affordances honest.
+  const rendersAnchor = isValidElement(render) && render.type === "a";
+
   return (
     <ButtonPrimitive
       data-slot="button"
       className={cn(buttonVariants({ variant, size, className }))}
       nativeButton={nativeButton ?? rendersNativeButton}
       render={render}
+      role={rendersAnchor ? "link" : undefined}
       {...props}
     />
   );

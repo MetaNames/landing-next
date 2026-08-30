@@ -69,7 +69,7 @@ export function Stats() {
           className="h-auto w-36 max-w-full opacity-90 transition-opacity group-hover:opacity-100"
         />
         <span className="text-xs uppercase tracking-[0.18em] text-muted-foreground">
-          Powered by
+          Secures every name
         </span>
       </a>
 
