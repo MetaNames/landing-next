@@ -53,8 +53,10 @@ const byPreference = (coins: string[]) =>
     return rank(a) - rank(b);
   });
 
+export const availableFeeCoins = byPreference(currentCoins);
+
 export const feeCoinCandidates = [
-  ...byPreference(currentCoins),
+  ...availableFeeCoins,
   ...byPreference(otherCoins),
 ];
 

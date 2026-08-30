@@ -1,3 +1,4 @@
+import userEvent from "@testing-library/user-event";
 import { describe, it, expect, vi, afterEach } from "vitest";
 
 import { Pricing } from "@/components/pricing";
@@ -37,6 +38,53 @@ describe("Pricing", () => {
     expect((await screen.findAllByText("USDC / yr")).length).toBe(
       PRICING.TIERS.length,
     );
+  });
+
+  it("switches live prices between environment BYOC tokens", async () => {
+    const user = userEvent.setup();
+
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async (input: string | URL) => {
+        const url = new URL(String(input), "http://localhost");
+        const coin = url.searchParams.get("coin") ?? "TEST_COIN";
+
+        return {
+          ok: true,
+          json: async () => ({
+            name: url.searchParams.get("name"),
+            feesLabel: coin === "ETH_GOERLI" ? 0.25 : 8,
+            fees: coin === "ETH_GOERLI" ? "250000000000000000" : "8",
+            symbol: coin,
+          }),
+        };
+      }),
+    );
+
+    render(<Pricing />);
+
+    expect(
+      screen.getByText(/pay with supported tokens through byoc/i),
+    ).toBeInTheDocument();
+    expect(screen.getByRole("tab", { name: "Test Coin" })).toHaveAttribute(
+      "aria-selected",
+      "true",
+    );
+    expect(
+      screen.getByRole("tab", { name: "ETH · Goerli" }),
+    ).toBeInTheDocument();
+    await waitFor(() =>
+      expect(screen.getAllByText("TEST COIN / yr")).toHaveLength(
+        PRICING.TIERS.length,
+      ),
+    );
+
+    await user.click(screen.getByRole("tab", { name: "ETH · Goerli" }));
+
+    expect((await screen.findAllByText("0.25")).length).toBe(
+      PRICING.TIERS.length,
+    );
+    expect(screen.getAllByText("ETH / yr")).toHaveLength(PRICING.TIERS.length);
   });
 
   // A tier showing nothing reads as "free"; it has to say it doesn't know.

@@ -18,16 +18,21 @@ export interface RegistrationFee {
  * Mint fee for one name. Fees depend only on length and rarely move, so the
  * query is cached hard and never refetched on focus.
  */
-export function useRegistrationFee(name: string, enabled = true) {
+export function useRegistrationFee(
+  name: string,
+  enabled = true,
+  coin?: string,
+) {
   const clean = name.trim().toLowerCase();
 
   return useQuery<RegistrationFee>({
-    queryKey: ["registration-fee", clean],
+    queryKey: ["registration-fee", clean, coin],
     enabled: enabled && clean.length > 0 && validateDomainName(clean).valid,
     queryFn: async () => {
-      const response = await fetch(
-        `${API.REGISTRATION_FEES}?name=${encodeURIComponent(clean)}`,
-      );
+      const params = new URLSearchParams({ name: clean });
+      if (coin) params.set("coin", coin);
+
+      const response = await fetch(`${API.REGISTRATION_FEES}?${params}`);
 
       if (!response.ok) throw new Error("Fee lookup failed");
 

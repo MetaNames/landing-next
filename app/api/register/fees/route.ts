@@ -2,7 +2,7 @@ import type { NextRequest } from "next/server";
 
 import { config } from "@/lib/config";
 import { normalizeDomain, validateDomainName } from "@/lib/domain-validator";
-import { feeCoinCandidates } from "@/lib/metanames";
+import { availableFeeCoins, feeCoinCandidates } from "@/lib/metanames";
 
 export const revalidate = 3600;
 
@@ -29,11 +29,18 @@ export async function GET(request: NextRequest) {
   }
 
   const name = normalizeDomain(raw);
+  const requestedCoin = request.nextUrl.searchParams.get("coin");
+
+  if (requestedCoin && !availableFeeCoins.includes(requestedCoin)) {
+    return Response.json({ error: "Unsupported coin symbol" }, { status: 400 });
+  }
 
   try {
+    const coins = requestedCoin ? [requestedCoin] : feeCoinCandidates;
+
     // The app rejects a coin its environment doesn't support, so try the
     // candidates in order and keep the first quote that comes back.
-    for (const coin of feeCoinCandidates) {
+    for (const coin of coins) {
       const upstream = await fetch(
         `${config.appUrl}/api/register/${encodeURIComponent(name)}/fees/${coin}`,
         { next: { revalidate: 3600 } },
