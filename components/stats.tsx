@@ -54,23 +54,24 @@ export function Stats() {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-3xl mx-auto">
-      <div className="glass-panel rounded-2xl p-6 flex items-center justify-center gap-4">
+      {/* The logo takes the slot the numbers take in the sibling tiles, so the
+          three read as one row instead of one odd tile beside two stats. The
+          whole tile is the link — a 28px-wide logo is a poor hit target. */}
+      <a
+        href={EXTERNAL_LINKS.PARTISIA}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="focus-ring glass-panel group rounded-2xl p-6 flex flex-col gap-3 items-center justify-center transition-colors hover:border-primary/40"
+      >
+        <Image
+          src={partisiaImage}
+          alt="Partisia Blockchain"
+          className="h-auto w-36 max-w-full opacity-90 transition-opacity group-hover:opacity-100"
+        />
         <span className="text-xs uppercase tracking-[0.18em] text-muted-foreground">
           Powered by
         </span>
-        <a
-          href={EXTERNAL_LINKS.PARTISIA}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="focus-ring rounded-md transition-opacity opacity-90 hover:opacity-100"
-        >
-          <Image
-            src={partisiaImage}
-            alt="Partisia Blockchain"
-            className="w-full h-auto max-w-28"
-          />
-        </a>
-      </div>
+      </a>
 
       <div className="glass-panel rounded-2xl p-6 flex flex-col gap-1 items-center justify-center">
         <span className="font-heading text-3xl font-extrabold text-primary-glow text-glow">
