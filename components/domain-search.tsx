@@ -180,7 +180,7 @@ export function DomainSearch() {
             <Check className="h-3.5 w-3.5" aria-hidden="true" />
             <strong className="font-mono">{fullName}</strong> is available
             {fee
-              ? ` for ${fee.feesLabel} ${fee.symbol.split("_").at(-1)}.`
+              ? ` for ${fee.feesLabel} ${fee.symbol.split("_").at(-1)} a year.`
               : "."}
           </span>
         )}

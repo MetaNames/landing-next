@@ -1,7 +1,5 @@
 import { ChevronDown } from "lucide-react";
 
-import { EXTERNAL_LINKS } from "@/lib/constants";
-
 interface FaqItem {
   question: string;
   answer: string;
@@ -25,7 +23,12 @@ export const FAQ_ITEMS: FaqItem[] = [
   {
     question: "What does a name cost?",
     answer:
-      "Registration is paid in MPC and priced by name length — shorter names cost more. The exact fee is shown in the app before you confirm, so nothing is charged until you approve the transaction.",
+      "A name is a yearly registration, paid in MPC and priced by length — shorter names cost more. The exact fee is shown in the app before you confirm, so nothing is charged until you approve the transaction.",
+  },
+  {
+    question: "Do I have to renew my name?",
+    answer:
+      "Yes. A registration lasts a year, and renewing before it expires keeps the name and everything stored on it. The app shows the expiry date and warns you in the last month; a name that expires becomes available to anyone again.",
   },
   {
     question: "Can I create subdomains?",
@@ -65,18 +68,6 @@ export function Faq() {
           </p>
         </details>
       ))}
-      <p className="text-sm text-muted-foreground">
-        Still stuck?{" "}
-        <a
-          href={EXTERNAL_LINKS.TELEGRAM}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="focus-ring underline underline-offset-4"
-        >
-          Ask on Telegram
-        </a>
-        .
-      </p>
     </div>
   );
 }
