@@ -36,6 +36,36 @@ describe("GET /api/register/fees", () => {
     );
   });
 
+  it("quotes an explicitly selected environment BYOC coin", async () => {
+    const coin = feeCoinCandidates[1];
+    const fetchMock = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({ ...FEES, symbol: coin }),
+    });
+    vi.stubGlobal("fetch", fetchMock);
+
+    const response = await GET(request(`name=marco&coin=${coin}`));
+
+    expect(response.status).toBe(200);
+    expect(fetchMock).toHaveBeenCalledWith(
+      `${config.appUrl}/api/register/marco.mpc/fees/${coin}`,
+      expect.anything(),
+    );
+  });
+
+  it("rejects a BYOC coin outside the active environment", async () => {
+    const fetchMock = vi.fn();
+    vi.stubGlobal("fetch", fetchMock);
+
+    const response = await GET(request("name=marco&coin=NOT_A_COIN"));
+
+    expect(response.status).toBe(400);
+    await expect(response.json()).resolves.toEqual({
+      error: "Unsupported coin symbol",
+    });
+    expect(fetchMock).not.toHaveBeenCalled();
+  });
+
   it("rejects an invalid name before spending a round trip", async () => {
     const fetchMock = vi.fn();
     vi.stubGlobal("fetch", fetchMock);
