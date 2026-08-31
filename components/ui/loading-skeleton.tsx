@@ -1,15 +1,28 @@
 import { Skeleton } from "@/components/ui/skeleton";
 
+/**
+ * Deliberately not three identical tiles: the panel this stands in for is a
+ * wordmark beside two counters, and those two shapes are different heights. The
+ * placeholder boxes mirror the real line boxes (a 36px `text-3xl` number, a 16px
+ * uppercase label) so nothing below the stats jumps when /api/stats resolves.
+ */
 export function StatsSkeleton() {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-3xl mx-auto">
-      {[0, 1, 2].map((i) => (
+    <div
+      className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-3xl mx-auto"
+      aria-hidden="true"
+    >
+      <div className="glass-panel rounded-2xl p-6 flex flex-col gap-3 items-center justify-center">
+        <Skeleton className="h-3 w-36" />
+        <Skeleton className="h-4 w-28" />
+      </div>
+      {[0, 1].map((i) => (
         <div
           key={i}
-          className="glass-panel rounded-2xl p-6 flex flex-col gap-2 items-center justify-center"
+          className="glass-panel rounded-2xl p-6 flex flex-col gap-1 items-center justify-center"
         >
-          <Skeleton className="h-8 w-24" />
-          <Skeleton className="h-3 w-28" />
+          <Skeleton className="h-9 w-24" />
+          <Skeleton className="h-4 w-28" />
         </div>
       ))}
     </div>

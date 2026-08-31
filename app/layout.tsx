@@ -27,21 +27,28 @@ export const metadata: Metadata = {
     template: "%s | MetaNames",
   },
   description:
-    "Meta Names offers a cutting-edge DNS solution on the Partisia blockchain. Simplify blockchain integration for Web3 developers with our user-friendly SDK. Manage decentralized domain names seamlessly.",
+    "Register a .mpc domain on the Partisia Blockchain and replace long wallet addresses with one readable name. Store wallets, socials, websites and avatars on-chain, issue subdomains, and resolve it all from your own app with the open-source Meta Names SDK.",
   keywords: [
-    "DNS",
+    ".mpc domain",
+    "Meta Names",
     "Partisia Blockchain",
-    "Web3",
-    "Blockchain域名",
-    "Decentralized DNS",
-    "Web3 domains",
-    "Crypto domain",
-    ".mpc",
-    "Partisia",
+    "Partisia domain name",
+    "web3 domains",
+    "web3 identity",
+    "decentralized DNS",
+    "blockchain domain names",
+    "crypto wallet name",
+    "blockchain subdomains",
   ],
   authors: [{ name: "MetaNames Team" }],
   creator: "MetaNames",
+  publisher: "MetaNames",
+  applicationName: "MetaNames",
+  category: "technology",
   metadataBase: new URL(config.siteUrl),
+  // Every marketing link lands on "/" with a ?q= search seed; the canonical
+  // keeps those variants from being indexed as separate pages.
+  alternates: { canonical: "/" },
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
@@ -54,13 +61,13 @@ export const metadata: Metadata = {
     siteName: "MetaNames",
     title: "MetaNames | DNS for Partisia Blockchain",
     description:
-      "Cutting-edge DNS solution on Partisia Blockchain. Simplify Web3 domain management with our developer-friendly SDK.",
+      "Register a .mpc domain on the Partisia Blockchain. One readable name for your wallets, socials, website and avatar.",
   },
   twitter: {
     card: "summary_large_image",
     title: "MetaNames | DNS for Partisia Blockchain",
     description:
-      "Cutting-edge DNS solution on Partisia Blockchain. Simplify Web3 domain management.",
+      "Register a .mpc domain on the Partisia Blockchain. One readable name for your wallets, socials, website and avatar.",
     creator: "@metanames",
   },
   robots: {
