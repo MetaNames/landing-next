@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { ExternalLink, Menu, X } from "lucide-react";
 
@@ -22,6 +22,7 @@ const SECTION_IDS = NAV_LINKS.map(({ href }) => href.slice(1));
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const menuToggleRef = useRef<HTMLButtonElement>(null);
   const activeSection = useActiveSection(SECTION_IDS);
 
   const toggleMobileMenu = useCallback(() => {
@@ -31,6 +32,23 @@ export function Header() {
   const closeMobileMenu = useCallback(() => {
     setMobileMenuOpen(false);
   }, []);
+
+  // Escape closes the menu, which is what every other overlay on the web does
+  // and the only way out for someone navigating by keyboard who does not want
+  // to tab through the whole nav to reach the toggle again.
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        setMobileMenuOpen(false);
+        menuToggleRef.current?.focus();
+      }
+    }
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [mobileMenuOpen]);
 
   return (
     <header className="border-b border-border/60 sticky top-0 z-50 bg-background/70 backdrop-blur-xl">
@@ -67,10 +85,12 @@ export function Header() {
             }
           />
           <button
+            ref={menuToggleRef}
             onClick={toggleMobileMenu}
             className="focus-ring p-2 hover:bg-muted rounded-md transition-colors md:hidden"
             aria-label="Toggle menu"
             aria-expanded={mobileMenuOpen}
+            aria-controls="mobile-navigation"
           >
             {mobileMenuOpen ? (
               <X className="h-5 w-5" />
@@ -81,7 +101,10 @@ export function Header() {
         </div>
       </div>
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-border">
+        <div
+          id="mobile-navigation"
+          className="md:hidden border-t border-border"
+        >
           <nav className="container mx-auto px-4 py-4 flex flex-col gap-3">
             {NAV_LINKS.map(({ href, label }) => (
               <Link

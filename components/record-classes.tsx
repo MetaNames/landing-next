@@ -19,16 +19,38 @@ export function RecordClasses() {
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setIsVisible(false);
+    // The global reduced-motion rule collapses the fade to ~0ms, which turns
+    // this into text that snaps to a new word every three seconds — worse for
+    // someone who asked for less motion than the fade was. Hold on the first
+    // record type instead, and pick the rotation back up if the preference
+    // changes mid-session.
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let interval: ReturnType<typeof setInterval> | undefined;
+    let timeout: ReturnType<typeof setTimeout> | undefined;
 
-      setTimeout(() => {
-        setIndex((prev) => (prev + 1) % RECORD_TYPES.length);
-        setIsVisible(true);
-      }, ANIMATION.RECORD_FADE_DURATION);
-    }, ANIMATION.RECORD_CHANGE_INTERVAL);
+    function sync() {
+      clearInterval(interval);
+      clearTimeout(timeout);
+      if (reduceMotion.matches) return;
 
-    return () => clearInterval(interval);
+      interval = setInterval(() => {
+        setIsVisible(false);
+
+        timeout = setTimeout(() => {
+          setIndex((prev) => (prev + 1) % RECORD_TYPES.length);
+          setIsVisible(true);
+        }, ANIMATION.RECORD_FADE_DURATION);
+      }, ANIMATION.RECORD_CHANGE_INTERVAL);
+    }
+
+    sync();
+    reduceMotion.addEventListener("change", sync);
+
+    return () => {
+      clearInterval(interval);
+      clearTimeout(timeout);
+      reduceMotion.removeEventListener("change", sync);
+    };
   }, []);
 
   return (

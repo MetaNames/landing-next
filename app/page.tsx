@@ -3,8 +3,10 @@
 import { Suspense, lazy } from "react";
 import { ExternalLink } from "lucide-react";
 
+import { ClosingCta } from "@/components/closing-cta";
 import { DomainSearch } from "@/components/domain-search";
 import { Faq } from "@/components/faq";
+import { HeroProof } from "@/components/hero-proof";
 import { HashScroll } from "@/components/hash-scroll";
 import { HowItWorks } from "@/components/how-it-works";
 import { RecordClasses } from "@/components/record-classes";
@@ -46,6 +48,7 @@ export default function Home() {
       <HashScroll />
       {/* Hero */}
       <section
+        id="hero"
         className="spotlight-beam flex flex-col items-center gap-8 py-16 sm:py-24 w-full"
         aria-labelledby="hero-title"
       >
@@ -69,8 +72,9 @@ export default function Home() {
           <p className="text-base sm:text-lg text-muted-foreground text-balance">
             One name for your <RecordClasses />
           </p>
-          <div className="mt-4 w-full">
+          <div className="mt-4 flex w-full flex-col gap-3">
             <DomainSearch />
+            <HeroProof />
           </div>
           <Button
             size="lg"
@@ -196,6 +200,9 @@ export default function Home() {
           }
         />
       </Section>
+
+      {/* Closing CTA */}
+      <ClosingCta />
     </>
   );
 }
